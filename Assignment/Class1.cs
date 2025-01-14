@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assignment
 {
-    internal class Class1
+    class Person
     {
+        private string index;
     }
 }
