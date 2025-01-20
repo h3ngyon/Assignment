@@ -176,7 +176,10 @@ namespace Assignment
                 Flight x = kvp.Value;
 
                 string[] cities = ["Dubai (DXB", "Bangkok (BKK)" , "Tokyo (NRT)"]; 
-                if (cities.Contains(x.Origin) { TotalFee -= 25; }
+                if (cities.Contains(x.Origin)) 
+                { 
+                    TotalFee -= 25; 
+                }
 
             }
         
