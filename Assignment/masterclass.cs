@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace Assignment
             ExpectedTime = expectedTime; 
             Status = status;
         }
-        public abstract double CalculateFees(); public override string ToString()
+        public abstract double CalculateFees();
+        public override string ToString()
         {
             return $"Fight No: {FlightNumber:-10} Origin: {Origin:-20} Destination: {Destination:-20} Expected Time: {ExpectedTime:-} Status: {Status}";
         }
@@ -59,5 +61,18 @@ namespace Assignment
             Console.WriteLine("I LOVE SUCKING BLACK DICk");
         }
     }
+
+    class NORMFlight : Flight
+    {
+        public NORMFlight(string fn, string origin, string destination, DateTime et, string status) : base(fn, origin, destination, et, status) { }
+
+        public override double CalculateFees()
+        {
+            base.CalculateFees();
+
+      
+        }
+    }   
+    class niiga
 
 }
