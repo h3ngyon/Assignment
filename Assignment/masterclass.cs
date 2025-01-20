@@ -142,9 +142,9 @@ namespace Assignment
         public bool AddFlight(Flight x)
         {
             if (Flights.ContainsKey(x.FlightNumber))
-                { return false; }
+            { return false; }
             else
-            { 
+            {
                 Flights.Add(x.FlightNumber, x);
                 return true;
             }
@@ -154,7 +154,7 @@ namespace Assignment
         {
             double TotalFee = 0;
             // Find Fee for all flights in Flights (dict)
-            foreach (KeyValuePair<string, Flight> kvp in Flights) 
+            foreach (KeyValuePair<string, Flight> kvp in Flights)
             {
                 TotalFee += (kvp.Value).CalculateFees();
                 Flight x = kvp.Value;
@@ -182,7 +182,7 @@ namespace Assignment
 
             // Calculate Discount based on flights in Flights(dict)
             // For every 3 flights arriving/departing, airlines will receive a discount
-            if (Flights.Count() / 3  > 1)
+            if (Flights.Count() / 3 > 1)
             {
                 TotalFee -= (Convert.ToInt32(Flights.Count() / 3) * 350);
             }
@@ -207,6 +207,34 @@ namespace Assignment
         {
             return $"Name: {Name,-30} Code: {Code,-10} Fee: ${CalculateFees:.2f,-10}";
         }
+    }
+
+    class BoardingGate
+    {
+        public string GateName {  get; set; }
+        public bool SupportsCFFT {  get; set; }
+        public bool SupportsDDJB { get; set; }
+        public bool SupportsLWTT { get; set; }
+        public Flight Flight { get; set; }
+
+        public BoardingGate(string gatename, bool cfft, bool ddjb, bool lwtt, Flight flight)
+        {
+            GateName = gatename;
+            SupportsCFFT = cfft;
+            SupportsDDJB = ddjb;
+            SupportsLWTT = lwtt;
+            Flight = flight;
+        }
+    }
+
+    class Terminal
+    {
+        public string TerminalName { get; set; }
+        public Dictionary<string, Airline> Airlines { get; set; }
+        public Dictionary<string, Flight> Flights { get; set; }
+        public Dictionary<string,BoardingGate> BoardingGates { get; set; }
+        public Dictionary<string,double> GateFees  { get; set; }
+
     }
 }
     
