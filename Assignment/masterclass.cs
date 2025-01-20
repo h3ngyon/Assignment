@@ -21,7 +21,8 @@ namespace Assignment
             ExpectedTime = expectedTime; 
             Status = status;
         }
-        public abstract double CalculateFees(); public override string ToString()
+        public abstract double CalculateFees();
+        public override string ToString()
         {
             return $"Fight No: {FlightNumber:-10} Origin: {Origin:-20} Destination: {Destination:-20} Expected Time: {ExpectedTime:-} Status: {Status}";
         }
@@ -58,5 +59,15 @@ namespace Assignment
             return base.ToString() + "\tRequest Fee: " + RequestFee;
         }
     }
+
+    class NORMFlight : Flight
+    {
+        public NORMFlight(string fn, string origin, string destination, DateTime et, string status) : base(fn, origin, destination, et, status) { }
+
+        public double CalculateFees()
+        {
+            base.CalculateFees();
+        }
+    }   
 
 }
