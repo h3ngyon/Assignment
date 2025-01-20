@@ -56,6 +56,7 @@ namespace Assignment
         public override string ToString()
         {
             return base.ToString() + "\tRequest Fee: " + RequestFee;
+            Console.WriteLine("I LOVE SUCKING BLACK DICk");
         }
     }
 
