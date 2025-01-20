@@ -58,6 +58,7 @@ namespace Assignment
         public override string ToString()
         {
             return base.ToString() + "\tRequest Fee: " + RequestFee;
+            Console.WriteLine("I LOVE SUCKING BLACK DICk");
         }
     }
 
@@ -68,10 +69,10 @@ namespace Assignment
         public override double CalculateFees()
         {
             base.CalculateFees();
-# Im done
-# un sie/'
+
       
         }
     }   
+    class niiga
 
 }
