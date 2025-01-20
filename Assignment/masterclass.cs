@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -152,41 +153,41 @@ namespace Assignment
         public double CalculateFees()
         {
             double TotalFee = 0;
-            
             // Find Fee for all flights in Flights (dict)
             foreach (KeyValuePair<string, Flight> kvp in Flights) 
             {
                 TotalFee += (kvp.Value).CalculateFees();
-            }
-            
-
-            // Calculate Discount based on flights in Flights(dict)
-            double discount = 0;
-            // For every 3 flights
-            if (Flights.Count() / 3  > 1)
-            {
-                discount += Convert.ToInt32(Flights.Count() / 3) * 350;
-            }
-
-            // Flights before 11am and after 9pm + Origin from BKK,DXB,NRT
-            TimeSpan elevenAM = new TimeSpan(11, 0, 0);
-            TimeSpan ninePM = new TimeSpan(21, 0, 0);
-            foreach (KeyValuePair<string, Flight> kvp in Flights)
-            {
                 Flight x = kvp.Value;
-
-                string[] cities = ["Dubai (DXB", "Bangkok (BKK)" , "Tokyo (NRT)"]; 
-                if (cities.Contains(x.Origin)) 
-                { 
-                    TotalFee -= 25; 
+                // Discounts for Flights from Dubai, Bangkok, Tokyo
+                string[] cities = ["Dubai (DXB", "Bangkok (BKK)", "Tokyo (NRT)"];
+                if (cities.Contains(x.Origin))
+                {
+                    TotalFee -= 25;
                 }
 
+                // Discount for Flights before 11am and after 9pm
+                TimeSpan ninepm = new TimeSpan(21, 0, 0);
+                TimeSpan elevenam = new TimeSpan(11, 0, 0);
+                if (x.ExpectedTime.TimeOfDay < elevenam || x.ExpectedTime.TimeOfDay > ninepm)
+                {
+                    TotalFee -= 110;
+                }
+
+                // Check if Flights have special code requests
+                if (x is not NORMFlight)
+                {
+                    TotalFee -= 50;
+                }
             }
-        
 
+            // Calculate Discount based on flights in Flights(dict)
+            // For every 3 flights arriving/departing, airlines will receive a discount
+            if (Flights.Count() / 3  > 1)
+            {
+                TotalFee -= (Convert.ToInt32(Flights.Count() / 3) * 350);
+            }
 
-
-            TotalFee -= discount;
+            // For For more than 5 flights arriving/departing, airlines receive an additional discount
             if (Flights.Count() > 5)
             { return TotalFee * 0.97; }
             else { return TotalFee; }
