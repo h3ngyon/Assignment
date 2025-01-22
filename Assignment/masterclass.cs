@@ -31,7 +31,7 @@ namespace Assignment
     class CFFTFlight : Flight
     {
         public double RequestFee { get; set; }
-        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestfee) : base(flightNumber, origin, destination, expectedTime, status)
+        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime,  double requestfee) : base(flightNumber, origin, destination, expectedTime)
         {
             RequestFee = requestfee;
         }
@@ -57,7 +57,7 @@ namespace Assignment
     class DDJBFlight : Flight
     {
         public double RequestFee { get; set; }
-        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestfee) : base(flightNumber, origin, destination, expectedTime, status)
+        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestfee) : base(flightNumber, origin, destination, expectedTime)
         {
             RequestFee = requestfee;
         }
@@ -84,7 +84,7 @@ namespace Assignment
 
     class NORMFlight : Flight
     {
-        public NORMFlight(string fn, string origin, string destination, DateTime et, string status) : base(fn, origin, destination, et, status) { }
+        public NORMFlight(string fn, string origin, string destination, DateTime et) : base(fn, origin, destination, et) { }
 
         public override double CalculateFees()
         {
@@ -107,7 +107,7 @@ namespace Assignment
     class LWTTFlight : Flight
     {
         public double RequestFee { get; set; }
-        public LWTTFlight(string fn, string origin, string destination, DateTime et, string status, double ReqFee) : base(fn, origin, destination, et, status)
+        public LWTTFlight(string fn, string origin, string destination, DateTime et,  double ReqFee) : base(fn, origin, destination, et)
         {
             RequestFee = ReqFee;
         }
