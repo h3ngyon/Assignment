@@ -25,7 +25,7 @@ namespace Assignment
         public abstract double CalculateFees();
         public override string ToString()
         {
-            return $"Fight No: {FlightNumber:-10} Origin: {Origin:-20} Destination: {Destination:-20} Expected Time: {ExpectedTime:-} Status: {Status}";
+            return $"Fight No: {FlightNumber:-10} Origin: {Origin:-20} Destination: {Destination:-20} Expected Time: {ExpectedTime:-10}";
         }
     }
     class CFFTFlight : Flight
