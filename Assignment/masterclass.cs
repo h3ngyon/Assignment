@@ -144,15 +144,12 @@ namespace Assignment
             Code = code;
         }
 
-        public bool AddFlight(Flight x)
+        public bool AddFlight(Flight x) 
         {
             if (Flights.ContainsKey(x.FlightNumber))
             { return false; }
-            else
-            {
-                Flights.Add(x.FlightNumber, x);
-                return true;
-            }
+            Flights.Add(x.FlightNumber, x);
+            return true;
         }
 
         public double CalculateFees()
@@ -214,7 +211,7 @@ namespace Assignment
         }
     }
 
-    class BoardingGate
+    class BoardingGate // Havent added Calculate Fees and ToString
     {
         public string GateName {  get; set; }
         public bool SupportsCFFT {  get; set; }
@@ -222,13 +219,9 @@ namespace Assignment
         public bool SupportsLWTT { get; set; }
         public Flight Flight { get; set; }
 
-        public BoardingGate(string gatename, bool cfft, bool ddjb, bool lwtt, Flight flight)
+        public BoardingGate(string gatename)
         {
             GateName = gatename;
-            SupportsCFFT = cfft;
-            SupportsDDJB = ddjb;
-            SupportsLWTT = lwtt;
-            Flight = flight;
         }
     }
 
