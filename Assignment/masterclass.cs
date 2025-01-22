@@ -138,6 +138,11 @@ namespace Assignment
         public string Code { get; set; }
 
         public Dictionary<string, Flight> Flights { get; set; }
+        public Airline(string name, string code)
+        {
+            Name = name;
+            Code = code;
+        }
 
         public bool AddFlight(Flight x)
         {
@@ -234,6 +239,8 @@ namespace Assignment
         public Dictionary<string, Flight> Flights { get; set; }
         public Dictionary<string,BoardingGate> BoardingGates { get; set; }
         public Dictionary<string,double> GateFees  { get; set; }
+
+
 
     }
 }

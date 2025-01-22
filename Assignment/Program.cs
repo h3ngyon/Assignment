@@ -1,8 +1,21 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Assignment;
 
-using Assignment;
-using System.Runtime.InteropServices;
+// Basic Feature 1.
 
-CFFTFlight flight = new CFFTFlight("SQ 115", "Tokyo(NRT)", "Singapore(SIN)", Convert.ToDateTime("13/1/2025 11:45:00 am"), "Unavailable", 200);
+// Key for airline_dict will use airline code "SQ"/"MH"
+Dictionary<string,Airline> airline_dict = new Dictionary<string,Airline>();
+using (StreamReader sr = new StreamReader("airlines.csv"))
+{
+    sr.ReadLine();
+    string line;
+    while ((line= sr.ReadLine()) != null)
+    {
+        string[] airline = line.Split(",");
+        Airline new_airline = new Airline(airline[0], airline[1]);
+        // Key for Airline_dict will be airline code
+        airline_dict.Add(airline[1], new_airline);
+    }
+}
 
-Console.WriteLine(Convert.ToInt32(5 / 3));
+// Create Boarding Gates dictionary
+Dictionary<string,BoardingGate> boarding_gate_dict = new Dictionary<string,BoardingGate>();
