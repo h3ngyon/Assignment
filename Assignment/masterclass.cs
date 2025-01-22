@@ -239,8 +239,49 @@ namespace Assignment
         public Dictionary<string, Flight> Flights { get; set; }
         public Dictionary<string,BoardingGate> BoardingGates { get; set; }
         public Dictionary<string,double> GateFees  { get; set; }
+        public bool AddAirline(Airline airline)
+        {
+            if (Airlines.ContainsKey(airline.Code))
+            {
+                return false;
+            }
+            Airlines.Add(airline.Code, airline);
+            return true
+        }
+        public bool AddBoardingGate(BoardingGate boardinggate)
+        {
+            if (BoardingGates.ContainsKey(boardinggate.GateName))
+            {
+                return false;
+            }
+            BoardingGates.Add(boardinggate.GateName, boardinggate);
+            return true;
+        }
+        public Airline GetAirlineFromFlight(Flight flight) 
+        {
+            foreach (KeyValuePair<string, Airline> kvp in Airlines)
+            {
+                string[] flightno = flight.FlightNumber.Split(' ');
+                if (flightno[0] == kvp.Key)
+                {
+                    return kvp.Value;
+                }
 
-
+            }
+            return null;
+        }
+        public void PrintAirlineFees()
+        {
+            Console.WriteLine("Airline Fees")
+            foreach (Airline airline in Airlines)
+            {
+                Console.WriteLine($"{airline.Name}: ${airline.CalculateFees():.2f"});
+            }
+        }
+        public string ToString()
+        {
+            return base.ToString();
+        }
 
     }
 }
