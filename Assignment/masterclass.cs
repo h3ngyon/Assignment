@@ -31,23 +31,20 @@ namespace Assignment
     class CFFTFlight : Flight
     {
         public double RequestFee { get; set; }
-        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime,  double requestfee) : base(flightNumber, origin, destination, expectedTime)
+        public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime) : base(flightNumber, origin, destination, expectedTime)
         {
-            RequestFee = requestfee;
+            RequestFee = 150;
         }
         public override double CalculateFees()
         {
-            double baseFee = 300 + 150;
+            double baseFee = 300 + RequestFee;
             if (Destination == "Singapore (SIN)") // Arriving flights
             {
                 return 500 + baseFee;
             }
-            else if (Origin == "Singapore (SIN)") // Departing Flights
+            else  // (Origin == "Singapore (SIN)")  Departing Flights
             { return 800 + baseFee; }
-            else
-            {
-                return baseFee;
-            }
+
         }
         public override string ToString()
         {
@@ -57,28 +54,25 @@ namespace Assignment
     class DDJBFlight : Flight
     {
         public double RequestFee { get; set; }
-        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestfee) : base(flightNumber, origin, destination, expectedTime)
+        public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime) : base(flightNumber, origin, destination, expectedTime)
         {
-            RequestFee = requestfee;
+            RequestFee = 300;
         }
         public override double CalculateFees()
         {
-            double baseFee = 300 + 300;
+            double baseFee = 300 + RequestFee;
             if (Destination == "Singapore (SIN)") // Arriving flights
             {
                 return 500 + baseFee;
             }
-            else if (Origin == "Singapore (SIN)") // Departing Flights
-            { return 800 + baseFee; }
-            else
-            {
-                return baseFee;
+            else // (Origin == "Singapore (SIN)")  Departing Flights
+            { 
+                return 800 + baseFee;
             }
         }
         public override string ToString()
         {
             return base.ToString() + "\tRequest Fee: " + RequestFee;
-            Console.WriteLine("I LOVE SUCKING BLACK DICk");
         }
     }
 
@@ -107,22 +101,22 @@ namespace Assignment
     class LWTTFlight : Flight
     {
         public double RequestFee { get; set; }
-        public LWTTFlight(string fn, string origin, string destination, DateTime et,  double ReqFee) : base(fn, origin, destination, et)
+        public LWTTFlight(string fn, string origin, string destination, DateTime et) : base(fn, origin, destination, et)
         {
-            RequestFee = ReqFee;
+            RequestFee = 500;
         }
 
         public override double CalculateFees()
         {
-            double baseFee = 300 + 500;
+            double basefee = 300;
             if (Destination == "Singapore (SIN)") // Arriving flights
             {
-                return 500 + baseFee;
+                return 500 + RequestFee + basefee;
             }
-            else if (Origin == "Singapore (SIN)") // Departing Flights
-            { return 800 + baseFee; }
-            else { return baseFee; }
-
+            else // Departing Flights
+            {
+                return 800 + RequestFee + basefee;
+            }
         }
 
         public override string ToString()
