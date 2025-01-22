@@ -228,6 +228,13 @@ namespace Assignment
         public Dictionary<string, Flight> Flights { get; set; }
         public Dictionary<string,BoardingGate> BoardingGates { get; set; }
         public Dictionary<string,double> GateFees  { get; set; }
+
+        public Terminal(string terminalName)
+        {
+            TerminalName = terminalName;
+        }
+
+
         public bool AddAirline(Airline airline)
         {
             if (Airlines.ContainsKey(airline.Code))
