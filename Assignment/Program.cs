@@ -50,3 +50,15 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
 }
 
 // Basic Feature 2
+// Load Flights from flights.csv
+
+using (StreamReader sr = new StreamReader("flights.csv"))
+{
+    sr.ReadLine();
+    string line;
+
+    while ((line = sr.ReadLine()) != null)
+    {
+
+    }
+}

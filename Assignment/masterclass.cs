@@ -239,7 +239,7 @@ namespace Assignment
                 return false;
             }
             Airlines.Add(airline.Code, airline);
-            return true
+            return true;
         }
         public bool AddBoardingGate(BoardingGate boardinggate)
         {
@@ -265,15 +265,15 @@ namespace Assignment
         }
         public void PrintAirlineFees()
         {
-            Console.WriteLine("Airline Fees")
-            foreach (Airline airline in Airlines)
+            Console.WriteLine("Airline Fees:");
+            foreach (Airline airline in Airlines.Values)
             {
-                Console.WriteLine($"{airline.Name}: ${airline.CalculateFees():.2f"});
+                Console.WriteLine($"{airline.Name}: ${airline.CalculateFees():.2f}");
             }
         }
-        public string ToString()
+        public override string ToString()
         {
-            return base.ToString();
+            return $"Terminal: {TerminalName}";
         }
 
     }
