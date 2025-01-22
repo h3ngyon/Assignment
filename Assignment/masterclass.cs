@@ -25,7 +25,7 @@ namespace Assignment
         public abstract double CalculateFees();
         public override string ToString()
         {
-            return $"Fight No: {FlightNumber:-10} Origin: {Origin:-20} Destination: {Destination:-20} Expected Time: {ExpectedTime:-10}";
+            return $"Fight No: {FlightNumber,-8} Origin: {Origin,-20} Destination: {Destination,-20} Expected Time: {ExpectedTime,-10}";
         }
     }
     class CFFTFlight : Flight
@@ -48,7 +48,8 @@ namespace Assignment
         }
         public override string ToString()
         {
-            return base.ToString() + "\tRequest Fee: " + RequestFee;
+            string reqfee = $"Request Fee: ${RequestFee}";
+            return $"{base.ToString()}    {reqfee,-10}";
         }
     }
     class DDJBFlight : Flight
@@ -72,7 +73,8 @@ namespace Assignment
         }
         public override string ToString()
         {
-            return base.ToString() + "\tRequest Fee: " + RequestFee;
+            string reqfee = $"Request Fee: ${RequestFee}";
+            return $"{base.ToString()}    {reqfee,-10}";
         }
     }
 
@@ -121,7 +123,8 @@ namespace Assignment
 
         public override string ToString()
         {
-            return base.ToString();
+            string reqfee = $"Request Fee: ${RequestFee}";
+            return $"{base.ToString()}    {reqfee,-10}";
         }
     }
 
