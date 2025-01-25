@@ -229,9 +229,12 @@ namespace Assignment
         public Dictionary<string,BoardingGate> BoardingGates { get; set; }
         public Dictionary<string,double> GateFees  { get; set; }
 
-        public Terminal(string terminalName)
+        public Terminal(string terminalName, Dictionary<string, Airline> airlines, Dictionary<string, BoardingGate> boardingGate, Dictionary<string, double> gateFees)
         {
             TerminalName = terminalName;
+            Airlines = airlines;
+            BoardingGates = boardingGate;
+            GateFees = gateFees;
         }
 
 
@@ -278,7 +281,6 @@ namespace Assignment
         {
             return $"Terminal: {TerminalName}";
         }
-
     }
 }
     
