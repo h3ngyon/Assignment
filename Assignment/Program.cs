@@ -254,3 +254,48 @@ void NewFlight()
         Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
     }
 }
+
+// Basic Feature 7 : Display all flights by airline
+void DisplayAirLineFlights()
+{
+    Console.WriteLine("=============================================\r\nList of Airlines for Changi Airport Terminal 5\r\n=============================================\r\n");
+
+    Console.WriteLine($"{"Airline Code",-20} {"Airline Name",-20}");
+    foreach (Airline airLine in airline_dict.Values)
+    {
+        Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
+    }
+
+    Airline airline;
+    while (true)
+    {
+        Console.Write("Enter Airline Code: ");
+        try
+        {
+            string airlineCode = Console.ReadLine().ToUpper();
+            if (airline_dict.ContainsKey(airlineCode) == false)
+            {
+                throw new KeyNotFoundException();
+            }
+            airline = airline_dict[airlineCode];
+            break;
+        }
+        catch (FormatException fe)
+        {
+            Console.WriteLine("Input a proper airline code. Try again");
+            continue;
+        }
+        catch (KeyNotFoundException ke)
+        {
+            Console.WriteLine($"Airline not found.");
+            continue;
+        }
+    }
+
+    Console.WriteLine($"=============================================\r\nList of Flights for {airline.Name}\r\n=============================================\r\n");
+    foreach (Flight flight in airline.Flights.Values)
+    {
+        Console.WriteLine(flight);
+    }
+
+}
