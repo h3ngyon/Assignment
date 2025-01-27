@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Assignment
 {
-    abstract class Flight
+    abstract class Flight : IComparable<Flight>
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
@@ -33,6 +33,11 @@ namespace Assignment
         public override string ToString()
         {
             return $"Fight No: {FlightNumber,-8} Origin: {Origin,-20} Destination: {Destination,-20} Expected Time: {ExpectedTime,-10}";
+        }
+
+        public int CompareTo(Flight other)
+        {
+            return ExpectedTime.CompareTo(other.ExpectedTime);
         }
     }
     class CFFTFlight : Flight
