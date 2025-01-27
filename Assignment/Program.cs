@@ -125,7 +125,29 @@ void ListFlightsBasicInfo()
     }
 }
 
-
+// Basic Feature 4: List all Boarding Gates
+void ListAllBoardingGates()
+{
+    Console.WriteLine("=============================================\r\nList of Boarding Gates for Changi Airport Terminal 5\r\n=============================================\r\n");
+    Console.WriteLine($"{"Gate Name",-10} {"DDJB",-10} {"CFFT",-10} {"LWTT",-10}");
+    foreach (BoardingGate bg in boarding_gate_dict.Values)
+    {
+        string supports = "";
+        if (bg.SupportsCFFT == true)
+        {
+            supports += "CFFT ";
+        }
+        if (bg.SupportsLWTT == true)
+        {
+            supports += "LWTT ";
+        }
+        if (bg.SupportsDDJB == true)
+        {
+            supports += "DDJB ";
+        }
+        Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
+    }
+}
 
 // Basic Feature 5: Assign boarding gate to flight
 void AssignBoardingGate()
@@ -232,32 +254,3 @@ void NewFlight()
         Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
     }
 }
-
-// Basic Feature 3
-// display flight details
-
-
-// Basic Feature 4: List all Boarding Gates
-void ListAllBoardingGates()
-{
-    Console.WriteLine("=============================================\r\nList of Boarding Gates for Changi Airport Terminal 5\r\n=============================================\r\n");
-    Console.WriteLine($"{"Gate Name",-10} {"DDJB",-10} {"CFFT",-10} {"LWTT",-10}");
-    foreach (BoardingGate bg in boarding_gate_dict.Values)
-    {
-        string supports = "";
-        if (bg.SupportsCFFT == true)
-        {
-            supports += "CFFT ";
-        }
-        if (bg.SupportsLWTT == true)
-        {
-            supports += "LWTT ";
-        }
-        if (bg.SupportsDDJB == true)
-        {
-            supports += "DDJB ";
-        }
-        Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
-    }
-}
-//havjvx
