@@ -148,7 +148,7 @@ void ListAllBoardingGates()
         Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
     }
 }
-
+  
 // Basic Feature 5: Assign boarding gate to flight
 void AssignBoardingGate()
 {
@@ -298,4 +298,54 @@ void DisplayAirLineFlights()
         Console.WriteLine(flight);
     }
 
+}
+
+//Basic Feature 8
+//modify flight details
+// list all airlines available
+void ModifyFlights()
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    foreach (Airline al in airline_dict.Values)
+    {
+        Console.WriteLine($"{"Airline Code",-20} {"Airline Name",-20}");
+        foreach (Airline airLine in airline_dict.Values)
+        {
+            Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
+        }
+    }
+    Console.Write("Enter Airline Code: ");
+    string code = Console.ReadLine().ToUpper();
+    Airline airline;
+    foreach (KeyValuePair<string, Airline> kvp in airline_dict)
+    {
+        if (airline_dict.ContainsKey(code))
+        {
+            airline = airline_dict[code];
+            Console.WriteLine($"{"Flight Number",-20}{"Airline Name", -20} {"Origin",-20}{"Destination",-20}{"Expected Departure/Arrival Time",-20}");
+
+            foreach (Flight flight in airline.Flights.Values)
+            {
+                Console.WriteLine($"{flight.FlightNumber,-20} {flight.Origin,-20}{flight.Destination,-20}");
+            }
+            break;
+        }
+        Console.WriteLine("Airline not found.");
+    }
+    Console.WriteLine("===========================================================================================================================");
+    Console.WriteLine("[ 1 ] Choose an exsiting flight to modify ");
+    Console.WriteLine("[ 2 ] Choose an existing flight to delete ");
+    Console.WriteLine("===========================================================================================================================");
+    Console.Write("Enter an option: ");
+    string option =  Console.ReadLine();
+    if (option == "1")
+    {
+           
+    }
+    else if (option == "2")
+    {
+
+    }
 }
