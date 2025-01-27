@@ -325,24 +325,67 @@ void ModifyFlights()
         {
             airline = airline_dict[code];
             Console.WriteLine($"{"Flight Number",-20}{"Airline Name", -20} {"Origin",-20}{"Destination",-20}{"Expected Departure/Arrival Time",-20}");
-
             foreach (Flight flight in airline.Flights.Values)
             {
-                Console.WriteLine($"{flight.FlightNumber,-20} {flight.Origin,-20}{flight.Destination,-20}");
+                Console.WriteLine($"{flight.FlightNumber,-20} {airline.Name,-20}{flight.Origin,-20}{flight.Destination,-20}{flight.ExpectedTime,-20}");
+
             }
             break;
         }
         Console.WriteLine("Airline not found.");
     }
-    Console.WriteLine("===========================================================================================================================");
-    Console.WriteLine("[ 1 ] Choose an exsiting flight to modify ");
-    Console.WriteLine("[ 2 ] Choose an existing flight to delete ");
-    Console.WriteLine("===========================================================================================================================");
-    Console.Write("Enter an option: ");
+    Console.Write("Choose a flight to modify or delete: ");
+    string modified = Console.ReadLine();
+    Flight modify;
+    Console.WriteLine("1. Modify Flight ");
+    Console.WriteLine("2. Delete Flight ");
+    Console.Write("Choose an option: ");
     string option =  Console.ReadLine();
     if (option == "1")
     {
-           
+        Console.WriteLine("1. Modify Basic Information");
+        Console.WriteLine("2. Modify Status");
+        Console.WriteLine("3. Modify Special Request Code");
+        Console.WriteLine("4. Modify Boarding Gate");
+        Console.Write("Choose an option: ");
+        string choice = Console.ReadLine();
+        if (choice == "1")
+        {
+            Console.Write("Enter new origin: ");
+            string origin = Console.ReadLine();
+            Console.Write("Enter new Destination: ");
+            string dest = Console.ReadLine();
+            Console.Write("Enter new Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+            DateTime ex = Convert.ToDateTime(Console.ReadLine());
+            foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)
+            {
+                if (modified == kvp.Key)
+                {
+                    modify = kvp.Value;
+                    modify.Origin = origin;
+                    modify.Destination = dest;
+                    modify.ExpectedTime = ex;
+                }
+            }
+            Console.WriteLine("Flight has been updated!");
+        }
+        else if (choice == "2")
+        {
+            Console.Write("Enter new Status: ");
+            string statuschange = Console.ReadLine();
+            foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)
+            {
+                if (modified == kvp.Key)
+                {
+                    modify = kvp.Value;
+                    modify.Status = statuschange;
+                }
+            }
+        }
+        else if (choice == "3")
+        {
+
+        }
     }
     else if (option == "2")
     {
