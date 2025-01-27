@@ -103,3 +103,26 @@ using (StreamReader sr = new StreamReader("flights.csv"))
 T5.Airlines = airline_dict;
 T5.BoardingGates = boarding_gate_dict;
 T5.Flights = flight_dict;
+
+
+// Basic Feature 3: List all Flights with their basic information.
+void ListFlightsBasicInfo()
+{
+    foreach (Flight flight in flight_dict.Values)
+    {
+        string airlineName = " ";
+        foreach (Airline airline in airline_dict.Values)
+        {
+            string[] flightno = flight.FlightNumber.Split(' ');
+            string airlinecode = flightno[0];
+            if (airline.Code == airlinecode)
+            {
+                airlineName = airline.Name;
+                break;
+            }
+        }
+        Console.WriteLine($"Fight Number: {flight.FlightNumber,-8} Airline Name: {airlineName,-20} Origin: {flight.Origin,-20} Destination: {flight.Destination,-20} Expected Time: {flight.ExpectedTime,-10}");
+    }
+}
+
+
