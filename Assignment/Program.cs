@@ -52,13 +52,50 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
 // Basic Feature 2
 // Load Flights from flights.csv
 
-using (StreamReader sr = new StreamReader("flights.csv"))
+Dictionary<string, Airline> airlinedict = new Dictionary<string, Airline>();
+Dictionary<string, BoardingGate> gatesdict = new Dictionary<string, BoardingGate>();
+
+using (StreamReader sr = new StreamReader("airlines.csv"))
 {
-    sr.ReadLine();
-    string line;
-
-    while ((line = sr.ReadLine()) != null)
+    string? s = sr.ReadLine();
+    if (s != null)
     {
+        string[] heading = s.Split(',');
+    }
+    while ((s = sr.ReadLine()) != null)
+    {
+        string[] airlines = s.Split(",");
+        string airlinename = airlines[0];
+        string airlinecode = airlines[1];
+        Airline airline = new Airline(airlinename, airlinecode);
+        airlinedict.Add(airline.Name, airline);
+    }
+}
 
+using (StreamReader sr = new StreamReader("boardinggates.csv"))
+{
+    string? s = sr.ReadLine();
+    if (s != null)
+    {
+        string[] heading = s.Split(",");
+    }
+    while ((s = sr.ReadLine()) != null)
+    {
+        string[] gates = s.Split(",");
+        BoardingGate boardinggate = new BoardingGate(gates[0]);
+
+        if (gates[1] == "True")
+        {
+            boardinggate.SupportsDDJB = true;
+        }
+        if (gates[2] == "True")
+        {
+            boardinggate.SupportsCFFT = true;
+        }
+        if (gates[3] == "True")
+        {
+            boardinggate.SupportsLWTT = true;
+        }
+        gatesdict.Add(boardinggate.GateName, boardinggate);
     }
 }

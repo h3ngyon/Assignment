@@ -6,6 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//==========================================================
+// Student Number	: S10268172
+// Student Name	: Tan Heng Yong
+// Partner Name	: Isaac Leow Yu Jun
+//==========================================================
+
+
 namespace Assignment
 {
     abstract class Flight
