@@ -196,3 +196,39 @@ void AssignBoardingGate()
     bg.Flight = flight;
     Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.");
 }
+
+
+
+// Basic Feature 6: Create a new Flight
+void NewFlight()
+{
+    Console.Write("Enter Flight Number: ");
+    string? flightNo = Console.ReadLine();
+    Console.Write("Enter Origin: ");
+    string? origin = Console.ReadLine();
+    Console.Write("Enter Destination: ");
+    string? destination = Console.ReadLine();
+    Console.Write("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+    DateTime time = Convert.ToDateTime(Console.ReadLine());
+    Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
+    string? code = Console.ReadLine();
+
+    if (code == "CFFT")
+    {
+        CFFTFlight flight = new CFFTFlight(flightNo, origin, destination, time);
+        flight_dict.Add(flight.FlightNumber, flight);
+        Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+    }
+    if (code == "DDJB")
+    {
+        DDJBFlight flight = new DDJBFlight(flightNo, origin, destination, time);
+        flight_dict.Add(flight.FlightNumber, flight);
+        Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+    }
+    if (code == "LWTT")
+    {
+        LWTTFlight flight = new LWTTFlight(flightNo, origin, destination, time);
+        flight_dict.Add(flight.FlightNumber, flight);
+        Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+    }
+}
