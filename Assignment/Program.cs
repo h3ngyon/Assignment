@@ -126,3 +126,73 @@ void ListFlightsBasicInfo()
 }
 
 
+
+// Basic Feature 5: Assign boarding gate to flight
+void AssignBoardingGate()
+{
+    Console.WriteLine("=============================================\r\nAssign a Boarding Gate to a Flight\r\n=============================================\r\n");
+
+    Flight flight;
+    BoardingGate bg;
+    while (true)
+    {
+        Console.Write("Input the flight number: ");
+        string flightNo = Console.ReadLine();
+        if (flight_dict.ContainsKey(flightNo))
+        {
+            flight = flight_dict[flightNo];
+            break;
+        }
+
+    }
+    while (true)
+    {
+        Console.Write("Input the Boarding Gate Name: ");
+        string bgateName = Console.ReadLine();
+        if (boarding_gate_dict.ContainsKey(bgateName))
+        {
+            if (boarding_gate_dict[bgateName].Flight != null)
+            {
+                Console.WriteLine("A flight is already assigned to this boarding gate. Please try again.");
+                continue;
+            }
+
+            bg = boarding_gate_dict[bgateName];
+            break;
+        }
+        else { Console.WriteLine("Boarding Gate does not exist. Try again."); continue; }
+    }
+
+    // Display flight and boarding gate
+    Console.WriteLine($"{flight} Boarding Gate: {bg.GateName}");
+
+    // Set status
+    Console.WriteLine("Would you like to update the flight status? [Y/N]");
+    string option = Console.ReadLine().ToLower();
+    if (option == "y")
+    {
+        Console.WriteLine("1. Delayed\n2. Boarding\n3. On Time");
+        Console.WriteLine("Please select the new status of the flight: ");
+        string status = Console.ReadLine();
+        if (status == "1")
+        {
+            flight.Status = "Delayed";
+        }
+        else if (status == "2")
+        {
+            flight.Status = "Boarding";
+        }
+        else if (status == "3")
+        {
+            flight.Status = "On Time";
+        }
+    }
+    else
+    {
+        flight.Status = "On Time";
+    }
+
+    // Assign Flight to Boarding Gate
+    bg.Flight = flight;
+    Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.");
+}
