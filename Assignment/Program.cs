@@ -235,42 +235,67 @@ void AssignBoardingGate()
 // Basic Feature 6: Create a new Flight
 void NewFlight()
 {
-    Console.Write("Enter Flight Number: ");
-    string? flightNo = Console.ReadLine();
-
-    Console.Write("Enter Origin: ");
-    string? origin = Console.ReadLine();
-    
-    Console.Write("Enter Destination: ");
-    string? destination = Console.ReadLine();
-    
-    Console.Write("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
-    DateTime time = Convert.ToDateTime(Console.ReadLine());
-    
-    Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
-    string? code = Console.ReadLine().ToLower();
-
-
-    if (code == "cfft")
+    while (true)
     {
-        CFFTFlight flight = new CFFTFlight(flightNo, origin, destination, time);
-        flight_dict.Add(flight.FlightNumber, flight);
-        Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
-    }
-    if (code == "ddjb")
-    {
-        DDJBFlight flight = new DDJBFlight(flightNo, origin, destination, time);
-        flight_dict.Add(flight.FlightNumber, flight);
-        Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
-    }
-    if (code == "lwtt")
-    {
-        LWTTFlight flight = new LWTTFlight(flightNo, origin, destination, time);
-        flight_dict.Add(flight.FlightNumber, flight);
-        Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+        try
+        {
+            Console.Write("Enter Flight Number: ");
+            string? flightNo = Console.ReadLine();
+
+            Console.Write("Enter Origin: ");
+            string? origin = Console.ReadLine();
+
+            Console.Write("Enter Destination: ");
+            string? destination = Console.ReadLine();
+
+            Console.Write("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+            DateTime time = Convert.ToDateTime(Console.ReadLine());
+
+            Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
+
+
+            string? code = Console.ReadLine().ToLower();
+
+
+            if (code == "cfft")
+            {
+                CFFTFlight flight = new CFFTFlight(flightNo, origin, destination, time);
+                flight_dict.Add(flight.FlightNumber, flight);
+                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+            }
+            if (code == "ddjb")
+            {
+                DDJBFlight flight = new DDJBFlight(flightNo, origin, destination, time);
+                flight_dict.Add(flight.FlightNumber, flight);
+                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+            }
+            if (code == "lwtt")
+            {
+                LWTTFlight flight = new LWTTFlight(flightNo, origin, destination, time);
+                flight_dict.Add(flight.FlightNumber, flight);
+                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+            }
+            else
+            {
+                NORMFlight flight = new NORMFlight(flightNo, origin, destination, time);
+                flight_dict.Add(flight.FlightNumber, flight);
+                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+            }
+            break;
+        }
+        catch (OverflowException)
+        { 
+            Console.WriteLine("Please try again.");
+            continue;
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Please try again.");
+            continue;
+        }    
     }
 }
-
+NewFlight();
 
 // Basic Feature 7 : Display all flights by airline
 void DisplayAirLineFlights()
@@ -441,9 +466,3 @@ void DisplayFlightHeaders()
 {
     Console.WriteLine($"{"FlightNo",-9} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Status    Boarding Gate");
 }
-
-
-
-
-ListFlightsBasicInfo();
-ListAllBoardingGates();
