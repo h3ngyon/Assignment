@@ -351,6 +351,7 @@ void ModifyFlights()
     Console.Write("Choose a flight to modify or delete: ");
     string modified = Console.ReadLine();
     Flight modify;
+   
     Console.WriteLine("1. Modify Flight ");
     Console.WriteLine("2. Delete Flight ");
     Console.Write("Choose an option: ");
@@ -407,4 +408,36 @@ void ModifyFlights()
     }
 }
 
-ModifyFlights();
+
+// Basic Feature 9: Display flights in chronological order , boarding gates assignments where applicable
+void FlightsInOrder()
+{
+    List<Flight> flights = new List<Flight>();
+
+    foreach (Flight flight in flight_dict.Values)
+    {
+        flights.Add(flight);
+    }
+    flights.Sort();
+    DisplayFlightHeaders();
+    foreach (Flight flight in flights)
+    {
+        string gate = "";
+        foreach (BoardingGate bg in boarding_gate_dict.Values)
+        {
+            if (bg.Flight == flight)
+            {
+                gate = bg.GateName;
+                break;
+            }
+            gate = "Unassigned";
+        }
+
+        Console.WriteLine($"{flight}     {gate}");
+    }
+}
+
+void DisplayFlightHeaders()
+{
+    Console.WriteLine($"{"FlightNo",-9} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Status    Boarding Gate");
+}
