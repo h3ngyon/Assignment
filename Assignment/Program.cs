@@ -2,6 +2,8 @@
 using System.ComponentModel.Design;
 
 // Create Dictionaries, Terminal
+
+
 Terminal T5 = new Terminal("Terminal 5", new Dictionary<string, Airline>(), new Dictionary<string, BoardingGate>(), new Dictionary<string, double>());
 Dictionary<string, Airline> airline_dict = new Dictionary<string, Airline>();
 Dictionary<string, BoardingGate> gatesdict = new Dictionary<string, BoardingGate>();
@@ -465,5 +467,61 @@ void FlightsInOrder()
 
 void DisplayFlightHeaders()
 {
-    Console.WriteLine($"{"FlightNo",-9} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Status    Boarding Gate");
+    Console.WriteLine($"{"FlightNo",-9} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Code      Boarding Gate");
+}
+
+
+// WRITING MENU
+
+while (true)
+{
+    try
+    {
+        Console.WriteLine("=============================================\r\nWelcome to Changi Airport Terminal 5\r\n=============================================\r\n1. List All Flights\r\n2. List Boarding Gates\r\n3. Assign a Boarding Gate to a Flight\r\n4. Create Flight\r\n5. Display Airline Flights\r\n6. Modify Flight Details\r\n7. Display Flight Schedule\r\n0. Exit\r\n\r\n");
+        Console.WriteLine("Please select your option: ");
+
+        string option = Console.ReadLine();
+
+        if (option == "1")
+        {
+            ListFlightsBasicInfo();
+        } 
+        else if (option == "2")
+        {
+            ListAllBoardingGates();
+        }
+        else if (option == "3")
+        {
+            AssignBoardingGate();
+        }
+        else if ( option == "4")
+        {
+            NewFlight();
+        }
+        else if ( option == "5")
+        {
+            DisplayAirLineFlights();
+        }
+        else if (option == "6")
+        {
+            ModifyFlights();
+        }
+        else if (option == "7")
+        {
+            FlightsInOrder();
+        }
+        else if (option == "0")
+        {
+            Console.WriteLine("BYE BYE!!!");
+            break;
+        }
+
+    }
+
+
+    catch (FormatException)
+    {
+        Console.WriteLine("Please input an appropriate option.");
+        continue;
+    }
 }
