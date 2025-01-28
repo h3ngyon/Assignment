@@ -42,7 +42,7 @@ namespace Assignment
         }
         public override string ToString()
         {
-            return $"Fight No: {FlightNumber,-8} Origin: {Origin,-20} Destination: {Destination,-20} Expected Time: {ExpectedTime,-10}";
+            return $"{FlightNumber,-8}  {Origin,-18}  {Destination,-18}  {ExpectedTime,-7} ";
         }
 
         public int CompareTo(Flight other)

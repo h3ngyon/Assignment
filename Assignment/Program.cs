@@ -443,9 +443,9 @@ void DisplayFlightHeaders()
 
 
 
-//ListFlightsBasicInfo();
+ListFlightsBasicInfo();
 ListAllBoardingGates();
-/*AssignBoardingGate();
+AssignBoardingGate();
 NewFlight();
 DisplayAirLineFlights();
-FlightsInOrder();*/
+FlightsInOrder();
