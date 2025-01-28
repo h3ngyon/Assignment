@@ -203,6 +203,50 @@ namespace Assignment
             else { return TotalFee; }
         }
 
+        public double CalculateDiscount()
+        {
+            double subTotalFee = 0;
+            double discount = 0;
+            // Find Fee for all flights in Flights (dict)
+            foreach (KeyValuePair<string, Flight> kvp in Flights)
+            {
+                subTotalFee += (kvp.Value).CalculateFees();
+                Flight x = kvp.Value;
+                // Discounts for Flights from Dubai, Bangkok, Tokyo
+                string[] cities = ["Dubai (DXB", "Bangkok (BKK)", "Tokyo (NRT)"];
+                if (cities.Contains(x.Origin))
+                {
+                    discount += 25;
+                }
+
+                // Discount for Flights before 11am and after 9pm
+                TimeSpan ninepm = new TimeSpan(21, 0, 0);
+                TimeSpan elevenam = new TimeSpan(11, 0, 0);
+                if (x.ExpectedTime.TimeOfDay < elevenam || x.ExpectedTime.TimeOfDay > ninepm)
+                {
+                    discount += 110;
+                }
+
+                // Check if Flights have special code requests
+                if (x is not NORMFlight)
+                {
+                    discount += 50;
+                }
+            }
+
+            // Calculate Discount based on flights in Flights(dict)
+            // For every 3 flights arriving/departing, airlines will receive a discount
+            if (Flights.Count() / 3 > 1)
+            {
+                discount += (Convert.ToInt32(Flights.Count() / 3) * 350);
+            }
+
+            // For For more than 5 flights arriving/departing, airlines receive an additional discount
+            else if (Flights.Count() > 5)
+            { discount += subTotalFee * 0.03; }
+
+            return discount;
+        }
         public bool RemoveFlight(Flight x)
         {
             if (Flights.ContainsKey(x.FlightNumber))

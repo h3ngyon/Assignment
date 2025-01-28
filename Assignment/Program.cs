@@ -295,7 +295,8 @@ void NewFlight()
         }    
     }
 }
-NewFlight();
+
+
 
 // Basic Feature 7 : Display all flights by airline
 void DisplayAirLineFlights()
