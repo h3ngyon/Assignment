@@ -271,6 +271,10 @@ namespace Assignment
         public bool SupportsLWTT { get; set; }
         public Flight Flight { get; set; }
 
+        public double CalculateFees()
+        {
+            return Flight.CalculateFees();
+        }
         public BoardingGate(string gatename)
         {
             GateName = gatename;
