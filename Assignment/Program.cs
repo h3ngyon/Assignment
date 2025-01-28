@@ -4,7 +4,6 @@ using System.ComponentModel.Design;
 // Create Dictionaries, Terminal
 Terminal T5 = new Terminal("Terminal 5", new Dictionary<string, Airline>(), new Dictionary<string, BoardingGate>(), new Dictionary<string, double>());
 Dictionary<string, Airline> airline_dict = new Dictionary<string, Airline>();
-Dictionary<string, BoardingGate> boarding_gate_dict = new Dictionary<string, BoardingGate>();
 Dictionary<string, BoardingGate> gatesdict = new Dictionary<string, BoardingGate>();
 
 
@@ -40,7 +39,6 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
     {
         string[] gates = s.Split(",");
         BoardingGate boardinggate = new BoardingGate(gates[0]);
-
         if (gates[1] == "True")
         {
             boardinggate.SupportsDDJB = true;
@@ -104,7 +102,7 @@ using (StreamReader sr = new StreamReader("flights.csv"))
 
 //Initialize Terminal, T5, properties(dictionaries)
 T5.Airlines = airline_dict;
-T5.BoardingGates = boarding_gate_dict;
+T5.BoardingGates = gatesdict;
 T5.Flights = flight_dict;
 
 
@@ -133,7 +131,7 @@ void ListAllBoardingGates()
 {
     Console.WriteLine("=============================================\r\nList of Boarding Gates for Changi Airport Terminal 5\r\n=============================================\r\n");
     Console.WriteLine($"{"Gate Name",-10} {"DDJB",-10} {"CFFT",-10} {"LWTT",-10}");
-    foreach (BoardingGate bg in boarding_gate_dict.Values)
+    foreach (BoardingGate bg in gatesdict.Values)
     {
         string supports = "";
         if (bg.SupportsCFFT == true)
@@ -148,7 +146,8 @@ void ListAllBoardingGates()
         {
             supports += "DDJB ";
         }
-        Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
+        //Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
+        Console.WriteLine(bg);
     }
 }
   
@@ -178,17 +177,17 @@ void AssignBoardingGate()
     {
         Console.Write("Input the Boarding Gate Name: ");
         string bgateName = Console.ReadLine();
-        if (boarding_gate_dict.ContainsKey(bgateName))
+        if (gatesdict.ContainsKey(bgateName))
         {
             // If boarding gate contains a flight, restart the loop for a new Boarding Gate
-            if (boarding_gate_dict[bgateName].Flight != null)
+            if (gatesdict[bgateName].Flight != null)
             {
                 Console.WriteLine("A flight is already assigned to this boarding gate. Please try again.");
                 continue;
             }
 
             // Assign boarding gate to bg
-            bg = boarding_gate_dict[bgateName];
+            bg = gatesdict[bgateName];
             break;
         }
 
@@ -423,7 +422,7 @@ void FlightsInOrder()
     foreach (Flight flight in flights)
     {
         string gate = "";
-        foreach (BoardingGate bg in boarding_gate_dict.Values)
+        foreach (BoardingGate bg in gatesdict.Values)
         {
             if (bg.Flight == flight)
             {
@@ -441,3 +440,12 @@ void DisplayFlightHeaders()
 {
     Console.WriteLine($"{"FlightNo",-9} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Status    Boarding Gate");
 }
+
+
+
+//ListFlightsBasicInfo();
+ListAllBoardingGates();
+/*AssignBoardingGate();
+NewFlight();
+DisplayAirLineFlights();
+FlightsInOrder();*/

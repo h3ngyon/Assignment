@@ -234,6 +234,11 @@ namespace Assignment
         {
             GateName = gatename;
         }
+
+        public override string ToString()
+        {
+            return $"{GateName,-10} {SupportsDDJB,-10} {SupportsCFFT,-10} {SupportsLWTT,-10}";
+        }
     }
 
     class Terminal
