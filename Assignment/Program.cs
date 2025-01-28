@@ -1,5 +1,6 @@
 ﻿using Assignment;
 using System.ComponentModel.Design;
+using System.Data;
 
 // Create Dictionaries, Terminal
 Terminal T5 = new Terminal("Terminal 5", new Dictionary<string, Airline>(), new Dictionary<string, BoardingGate>(), new Dictionary<string, double>());
@@ -308,35 +309,39 @@ void ModifyFlights()
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
+    Console.WriteLine($"{"Airline Code",-20} {"Airline Name",-20}");
+    //Printing all available airlines in t5
     foreach (Airline al in airline_dict.Values)
     {
-        Console.WriteLine($"{"Airline Code",-20} {"Airline Name",-20}");
         foreach (Airline airLine in airline_dict.Values)
         {
             Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
         }
     }
+    //prompt user to enter airline to check
     Console.Write("Enter Airline Code: ");
     string code = Console.ReadLine().ToUpper();
     Airline airline;
     foreach (KeyValuePair<string, Airline> kvp in airline_dict)
     {
-        if (airline_dict.ContainsKey(code))
+        if (airline_dict.ContainsKey(code))//identify airline to display its flights
         {
             airline = airline_dict[code];
             Console.WriteLine($"{"Flight Number",-20}{"Airline Name", -20} {"Origin",-20}{"Destination",-20}{"Expected Departure/Arrival Time",-20}");
+            //display all flight details from the chosen airline 
             foreach (Flight flight in airline.Flights.Values)
             {
                 Console.WriteLine($"{flight.FlightNumber,-20} {airline.Name,-20}{flight.Origin,-20}{flight.Destination,-20}{flight.ExpectedTime,-20}");
-
             }
             break;
         }
+        //if airline entered is invalid
         Console.WriteLine("Airline not found.");
     }
     Console.Write("Choose a flight to modify or delete: ");
     string modified = Console.ReadLine();
     Flight modify;
+    // modify/delete options for user 
     Console.WriteLine("1. Modify Flight ");
     Console.WriteLine("2. Delete Flight ");
     Console.Write("Choose an option: ");
@@ -349,8 +354,10 @@ void ModifyFlights()
         Console.WriteLine("4. Modify Boarding Gate");
         Console.Write("Choose an option: ");
         string choice = Console.ReadLine();
+        //basic info
         if (choice == "1")
         {
+            //enter modifications
             Console.Write("Enter new origin: ");
             string origin = Console.ReadLine();
             Console.Write("Enter new Destination: ");
@@ -361,6 +368,7 @@ void ModifyFlights()
             {
                 if (modified == kvp.Key)
                 {
+                    //updating modifed values
                     modify = kvp.Value;
                     modify.Origin = origin;
                     modify.Destination = dest;
@@ -369,24 +377,29 @@ void ModifyFlights()
             }
             Console.WriteLine("Flight has been updated!");
         }
+        //modify status
         else if (choice == "2")
         {
+            //user enter modified status
             Console.Write("Enter new Status: ");
             string statuschange = Console.ReadLine();
             foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)
             {
                 if (modified == kvp.Key)
                 {
+                    //update status
                     modify = kvp.Value;
                     modify.Status = statuschange;
                 }
             }
         }
+        //modify special req
         else if (choice == "3")
         {
 
         }
     }
+    //user wants to delete flight
     else if (option == "2")
     {
 
