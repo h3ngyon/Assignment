@@ -113,7 +113,7 @@ void ListFlightsBasicInfo()
 {
     foreach (Flight flight in flight_dict.Values)
     {
-        string airlineName = " ";
+        string airlineName = "";
         foreach (Airline airline in airline_dict.Values)
         {
             string[] flightno = flight.FlightNumber.Split(' ');
@@ -157,8 +157,11 @@ void AssignBoardingGate()
 {
     Console.WriteLine("=============================================\r\nAssign a Boarding Gate to a Flight\r\n=============================================\r\n");
 
+    // Initialize flight and bg variables
     Flight flight;
     BoardingGate bg;
+    
+    // Check input to make sure the flight exists
     while (true)
     {
         Console.Write("Input the flight number: ");
@@ -170,21 +173,26 @@ void AssignBoardingGate()
         }
 
     }
+    // Checks that the boarding gate exists
     while (true)
     {
         Console.Write("Input the Boarding Gate Name: ");
         string bgateName = Console.ReadLine();
         if (boarding_gate_dict.ContainsKey(bgateName))
         {
+            // If boarding gate contains a flight, restart the loop for a new Boarding Gate
             if (boarding_gate_dict[bgateName].Flight != null)
             {
                 Console.WriteLine("A flight is already assigned to this boarding gate. Please try again.");
                 continue;
             }
 
+            // Assign boarding gate to bg
             bg = boarding_gate_dict[bgateName];
             break;
         }
+
+        // if boarding gate input does not exist, restart loop
         else { Console.WriteLine("Boarding Gate does not exist. Try again."); continue; }
     }
 
@@ -229,34 +237,40 @@ void NewFlight()
 {
     Console.Write("Enter Flight Number: ");
     string? flightNo = Console.ReadLine();
+
     Console.Write("Enter Origin: ");
     string? origin = Console.ReadLine();
+    
     Console.Write("Enter Destination: ");
     string? destination = Console.ReadLine();
+    
     Console.Write("Enter Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
     DateTime time = Convert.ToDateTime(Console.ReadLine());
+    
     Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
-    string? code = Console.ReadLine();
+    string? code = Console.ReadLine().ToLower();
 
-    if (code == "CFFT")
+
+    if (code == "cfft")
     {
         CFFTFlight flight = new CFFTFlight(flightNo, origin, destination, time);
         flight_dict.Add(flight.FlightNumber, flight);
         Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
     }
-    if (code == "DDJB")
+    if (code == "ddjb")
     {
         DDJBFlight flight = new DDJBFlight(flightNo, origin, destination, time);
         flight_dict.Add(flight.FlightNumber, flight);
         Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
     }
-    if (code == "LWTT")
+    if (code == "lwtt")
     {
         LWTTFlight flight = new LWTTFlight(flightNo, origin, destination, time);
         flight_dict.Add(flight.FlightNumber, flight);
         Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
     }
 }
+
 
 // Basic Feature 7 : Display all flights by airline
 void DisplayAirLineFlights()
