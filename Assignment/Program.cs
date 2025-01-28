@@ -27,7 +27,7 @@ using (StreamReader sr = new StreamReader("airlines.csv"))
         Airline airline = new Airline(airlinename, airlinecode);
         airline.Flights = new Dictionary<string, Flight>();
 
-        airline_dict.Add(airline.Name, airline);
+        airline_dict.Add(airline.Code, airline);
         T5.AddAirline(airline);
     }
 }
@@ -325,14 +325,12 @@ void ModifyFlights()
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
-    foreach (Airline al in airline_dict.Values)
-    {
-        Console.WriteLine($"{"Airline Code",-20} {"Airline Name",-20}");
-        foreach (Airline airLine in airline_dict.Values)
+
+    Console.WriteLine($"{"Airline Code",-15} {"Airline Name",-20}");
+    foreach (Airline airLine in airline_dict.Values)
         {
-            Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
+         Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
         }
-    }
     Console.Write("Enter Airline Code: ");
     string code = Console.ReadLine().ToUpper();
     Airline airline;
@@ -345,7 +343,6 @@ void ModifyFlights()
             foreach (Flight flight in airline.Flights.Values)
             {
                 Console.WriteLine($"{flight.FlightNumber,-20} {airline.Name,-20}{flight.Origin,-20}{flight.Destination,-20}{flight.ExpectedTime,-20}");
-
             }
             break;
         }
@@ -409,3 +406,5 @@ void ModifyFlights()
 
     }
 }
+
+ModifyFlights();
