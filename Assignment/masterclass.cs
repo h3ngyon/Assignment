@@ -70,8 +70,7 @@ namespace Assignment
         }
         public override string ToString()
         {
-            string reqfee = $"Request Fee: ${RequestFee}";
-            return $"{base.ToString()}    {reqfee,-10}";
+            return $"{base.ToString()}  CFFT ";
         }
     }
     class DDJBFlight : Flight
@@ -95,8 +94,7 @@ namespace Assignment
         }
         public override string ToString()
         {
-            string reqfee = $"Request Fee: ${RequestFee}";
-            return $"{base.ToString()}    {reqfee,-10}";
+            return $"{base.ToString()}  DDJB ";
         }
     }
 
@@ -111,7 +109,7 @@ namespace Assignment
 
         public override string ToString()
         {
-            return base.ToString();
+            return base.ToString() + "       ";
         }
     }
 
@@ -138,8 +136,7 @@ namespace Assignment
 
         public override string ToString()
         {
-            string reqfee = $"Request Fee: ${RequestFee}";
-            return $"{base.ToString()}    {reqfee,-10}";
+            return $"{base.ToString()}  LWTT ";
         }
     }
 
