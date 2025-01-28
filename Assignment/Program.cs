@@ -112,18 +112,18 @@ void ListFlightsBasicInfo()
     DisplayFlightHeaders();
     foreach (Flight flight in flight_dict.Values)
     {
-        string airlineName = "";
-        foreach (Airline airline in airline_dict.Values)
+        string gate = "";
+        foreach (BoardingGate bg in gatesdict.Values)
         {
-            string[] flightno = flight.FlightNumber.Split(' ');
-            string airlinecode = flightno[0];
-            if (airline.Code == airlinecode)
+            if (bg.Flight == flight)
             {
-                airlineName = airline.Name;
+                gate = bg.GateName;
                 break;
             }
+            gate = "Unassigned";
         }
-        Console.WriteLine(flight);
+
+        Console.WriteLine($"{flight}     {gate}");
     }
 }
 
@@ -445,4 +445,5 @@ void DisplayFlightHeaders()
 
 
 
-FlightsInOrder();
+ListFlightsBasicInfo();
+ListAllBoardingGates();
