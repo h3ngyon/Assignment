@@ -29,7 +29,17 @@ namespace Assignment
             Destination = destination;
             ExpectedTime = expectedTime;
         }
-        public abstract double CalculateFees();
+        public virtual double CalculateFees()
+        {
+            double baseFee = 300;
+            if (Destination == "Singapore (SIN)") // Arriving flights
+            {
+                return 500 + baseFee;
+            }
+            else if (Origin == "Singapore (SIN)") // Departing Flights
+            { return 800 + baseFee; }
+            else { return baseFee; }
+        }
         public override string ToString()
         {
             return $"Fight No: {FlightNumber,-8} Origin: {Origin,-20} Destination: {Destination,-20} Expected Time: {ExpectedTime,-10}";
@@ -96,14 +106,7 @@ namespace Assignment
 
         public override double CalculateFees()
         {
-            double baseFee = 300;
-            if (Destination == "Singapore (SIN)") // Arriving flights
-            {
-                return 500 + baseFee;
-            }
-            else if (Origin == "Singapore (SIN)") // Departing Flights
-            { return 800 + baseFee; }
-            else { return baseFee; }
+            return base.CalculateFees();
         }
 
         public override string ToString()

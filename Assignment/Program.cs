@@ -63,14 +63,17 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
 Dictionary<string, Flight> flight_dict = new Dictionary<string, Flight>();
 using (StreamReader sr = new StreamReader("flights.csv"))
 {
+    // Read Header
     sr.ReadLine();
     string line;
 
+    // Read other lines
     while ((line = sr.ReadLine()) != null)
     {
         Flight flight;
         string[] data = line.Split(",");
 
+        // Check Special request code
         if (data[4] == "CFFT")
         {
             flight = new CFFTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
@@ -93,7 +96,7 @@ using (StreamReader sr = new StreamReader("flights.csv"))
         if (airline_dict.ContainsKey(airlineCode))
         {
 
-            airline_dict[airlineCode].Flights.Add(flight.FlightNumber, flight);
+            airline_dict[airlineCode].AddFlight(flight);
         }
 
     }
