@@ -127,12 +127,13 @@ void ListFlightsBasicInfo()
 
         Console.WriteLine($"{flight}     {gate}");
     }
+    Console.WriteLine();
 }
 
 // Basic Feature 4: List all Boarding Gates
 void ListAllBoardingGates()
 {
-    Console.WriteLine("=============================================\r\nList of Boarding Gates for Changi Airport Terminal 5\r\n=============================================\r\n");
+    Console.WriteLine("=============================================\r\nList of Boarding Gates for Changi Airport Terminal 5\r\n=============================================\r");
     Console.WriteLine($"{"Gate Name",-10} {"DDJB",-10} {"CFFT",-10} {"LWTT",-10}");
     foreach (BoardingGate bg in gatesdict.Values)
     {
@@ -152,12 +153,13 @@ void ListAllBoardingGates()
         //Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
         Console.WriteLine(bg);
     }
+    Console.WriteLine();
 }
   
 // Basic Feature 5: Assign boarding gate to flight
 void AssignBoardingGate()
 {
-    Console.WriteLine("=============================================\r\nAssign a Boarding Gate to a Flight\r\n=============================================\r\n");
+    Console.WriteLine("=============================================\r\nAssign a Boarding Gate to a Flight\r\n=============================================\r");
 
     // Initialize flight and bg variables
     Flight flight;
@@ -229,7 +231,7 @@ void AssignBoardingGate()
 
     // Assign Flight to Boarding Gate
     bg.Flight = flight;
-    Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.");
+    Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
 }
 
 
@@ -303,12 +305,12 @@ void NewFlight()
 // Basic Feature 7 : Display all flights by airline
 void DisplayAirLineFlights()
 {
-    Console.WriteLine("=============================================\r\nList of Airlines for Changi Airport Terminal 5\r\n=============================================\r\n");
+    Console.WriteLine("=============================================\r\nList of Airlines for Changi Airport Terminal 5\r\n=============================================\r");
 
     Console.WriteLine($"{"Airline Code",-20} {"Airline Name",-20}");
     foreach (Airline airLine in airline_dict.Values)
     {
-        Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
+        Console.WriteLine($"{airLine.Code,-10} {airLine.Name,-20}");
     }
 
     Airline airline;
@@ -342,6 +344,7 @@ void DisplayAirLineFlights()
     {
         Console.WriteLine(flight);
     }
+    Console.WriteLine();
 
 }
 
@@ -367,7 +370,7 @@ void ModifyFlights()
         if (airline_dict.ContainsKey(code))
         {
             airline = airline_dict[code];
-            Console.WriteLine($"{"Flight Number",-20}{"Airline Name", -20} {"Origin",-20}{"Destination",-20}{"Expected Departure/Arrival Time",-20}");
+            Console.WriteLine($"{"Flight Number",-20} {"Airline Name", -20} {"Origin",-20} {"Destination",-20} {"Expected Departure/Arrival Time",-20}");
             foreach (Flight flight in airline.Flights.Values)
             {
                 Console.WriteLine($"{flight.FlightNumber,-20} {airline.Name,-20}{flight.Origin,-20}{flight.Destination,-20}{flight.ExpectedTime,-20}");
@@ -463,6 +466,7 @@ void FlightsInOrder()
 
         Console.WriteLine($"{flight}     {gate}");
     }
+    Console.WriteLine();
 }
 
 void DisplayFlightHeaders()
