@@ -237,7 +237,7 @@ void AssignBoardingGate()
 
 
 // Basic Feature 6: Create a new Flight
-void NewFlight()
+bool NewFlight()
 {
     while (true)
     {
@@ -285,7 +285,7 @@ void NewFlight()
                 flight_dict.Add(flight.FlightNumber, flight);
                 Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
             }
-            break;
+            return true;
         }
         catch (OverflowException)
         { 
