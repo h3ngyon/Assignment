@@ -70,7 +70,11 @@ namespace Assignment
             { return 800 + baseFee; }
 
         }
-        public override string ToString()
+        public string ToString()
+        {
+            return $"{base.ToString()}  CFFT ";
+        }
+        public string ToString2()
         {
             return $"{base.ToString()}  CFFT ";
         }
@@ -96,6 +100,10 @@ namespace Assignment
         }
         public override string ToString()
         {
+            return $"{base.ToString()}";
+        }
+        public  string ToString2()
+        {
             return $"{base.ToString()}  DDJB ";
         }
     }
@@ -110,6 +118,10 @@ namespace Assignment
         }
 
         public override string ToString()
+        {
+            return base.ToString();
+        }
+        public string ToString2()
         {
             return base.ToString() + "       ";
         }
@@ -137,6 +149,10 @@ namespace Assignment
         }
 
         public override string ToString()
+        {
+            return $"{base.ToString()}";
+        }
+        public string ToString2()
         {
             return $"{base.ToString()}  LWTT ";
         }
