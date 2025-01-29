@@ -111,21 +111,10 @@ T5.Flights = flight_dict;
 // Basic Feature 3: List all Flights with their basic information.
 void ListFlightsBasicInfo()
 {
-    DisplayFlightHeaders();
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
     foreach (Flight flight in flight_dict.Values)
     {
-        string gate = "";
-        foreach (BoardingGate bg in gatesdict.Values)
-        {
-            if (bg.Flight == flight)
-            {
-                gate = bg.GateName;
-                break;
-            }
-            gate = "Unassigned";
-        }
-
-        Console.WriteLine($"{flight}     {gate}");
+        Console.WriteLine($"{flight}");
     }
     Console.WriteLine();
 }
@@ -471,7 +460,7 @@ void FlightsInOrder()
 
 void DisplayFlightHeaders()
 {
-    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Code      Boarding Gate");
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
 }
 
 
