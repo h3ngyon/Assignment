@@ -153,6 +153,9 @@ void AssignBoardingGate()
         if (flight_dict.ContainsKey(flightNo))
         {
             flight = flight_dict[flightNo];
+
+            // Display flight details
+            Console.WriteLine(flight.ToString2());
             break;
         }
 
@@ -160,9 +163,9 @@ void AssignBoardingGate()
     // Checks that the boarding gate exists
     while (true)
     {
-        Console.Write("Input the Boarding Gate Name: ");
+        Console.Write("Input the Boarding Gate Name: ");  //Prompt for boarding gate
         string bgateName = Console.ReadLine();
-        if (gatesdict.ContainsKey(bgateName))
+        if (gatesdict.ContainsKey(bgateName)) 
         {
             // If boarding gate contains a flight, restart the loop for a new Boarding Gate
             if (gatesdict[bgateName].Flight != null)
@@ -219,6 +222,7 @@ void AssignBoardingGate()
 // Basic Feature 6: Create a new Flight
 bool NewFlight()
 {
+    List<Flight> flights = new List<Flight>();
     while (true)
     {
         try
@@ -238,38 +242,63 @@ bool NewFlight()
             Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
 
 
-            string? code = Console.ReadLine().ToLower();
+            string? code = Console.ReadLine().ToUpper();
 
-
-            if (code == "cfft")
+            Flight newflight;
+            if (code == "CFFT")
             {
                 CFFTFlight flight = new CFFTFlight(flightNo, origin, destination, time);
-                flight_dict.Add(flight.FlightNumber, flight);
-                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+                newflight = flight;             
             }
-            if (code == "ddjb")
+            if (code == "DDJB")
             {
                 DDJBFlight flight = new DDJBFlight(flightNo, origin, destination, time);
-                flight_dict.Add(flight.FlightNumber, flight);
-                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+                newflight = flight; 
             }
-            if (code == "lwtt")
+            if (code == "LWTT")
             {
                 LWTTFlight flight = new LWTTFlight(flightNo, origin, destination, time);
-                flight_dict.Add(flight.FlightNumber, flight);
-                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+                    newflight = flight;
             }
             else
             {
                 NORMFlight flight = new NORMFlight(flightNo, origin, destination, time);
-                flight_dict.Add(flight.FlightNumber, flight);
-                Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+                newflight = flight;
+                code = "";
+            }
+            flight_dict.Add(newflight.FlightNumber, newflight);
+            flights.Add(newflight);
+           
+
+            // Append Flight data to flights.csv
+            using (StreamWriter sw = new StreamWriter("flights.csv"))
+            {
+                sw.WriteLine($"{newflight.FlightNumber},{newflight.Origin},{newflight.Destination},{newflight.ExpectedTime},{code}");
+            }
+
+            // Prompt if user wants to create a new flight
+            Console.WriteLine("Would you like to create another flight? [Y/N}: ");
+            string option = Console.ReadLine().ToLower();
+            if (option == "y")
+            {
+                continue;
+            }
+
+            // Display success message(s)
+            foreach (Flight flight in flights)
+            {
+                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!");
             }
             return true;
         }
         catch (OverflowException)
         { 
             Console.WriteLine("Please try again.");
+            continue;
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("We could not find that file, can you try again.");
             continue;
         }
         catch (FormatException)
