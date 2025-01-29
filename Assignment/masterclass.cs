@@ -46,6 +46,10 @@ namespace Assignment
         {
             return $"{FlightNumber,-10} {Airline,-20} {Origin,-18}  {Destination,-18}  {ExpectedTime,-7} ";
         }
+        public virtual string ToString2()
+        {
+            return base.ToString() + "       ";
+        }
 
         public int CompareTo(Flight other)
         {
@@ -70,11 +74,11 @@ namespace Assignment
             { return 800 + baseFee; }
 
         }
-        public string ToString()
+        public override string ToString()
         {
             return $"{base.ToString()}  CFFT ";
         }
-        public string ToString2()
+        public override string ToString2()
         {
             return $"{base.ToString()}  CFFT ";
         }
@@ -102,7 +106,7 @@ namespace Assignment
         {
             return $"{base.ToString()}";
         }
-        public  string ToString2()
+        public override string ToString2()
         {
             return $"{base.ToString()}  DDJB ";
         }
@@ -121,7 +125,7 @@ namespace Assignment
         {
             return base.ToString();
         }
-        public string ToString2()
+        public override string ToString2()
         {
             return base.ToString() + "       ";
         }
@@ -152,7 +156,7 @@ namespace Assignment
         {
             return $"{base.ToString()}";
         }
-        public string ToString2()
+        public override string ToString2()
         {
             return $"{base.ToString()}  LWTT ";
         }

@@ -123,24 +123,15 @@ void ListFlightsBasicInfo()
 void ListAllBoardingGates()
 {
     Console.WriteLine("=============================================\r\nList of Boarding Gates for Changi Airport Terminal 5\r\n=============================================\r");
-    Console.WriteLine($"{"Gate Name",-10} {"DDJB",-10} {"CFFT",-10} {"LWTT",-10}");
+    Console.WriteLine($"{"Gate Name",-10} {"DDJB",-10} {"CFFT",-10} {"LWTT",-9} {"Flight Number"}");
     foreach (BoardingGate bg in gatesdict.Values)
     {
-        string supports = "";
-        if (bg.SupportsCFFT == true)
+        string flightnumber = "Unassigned";
+        if (bg.Flight != null)
         {
-            supports += "CFFT ";
+           flightnumber = bg.Flight.FlightNumber;
         }
-        if (bg.SupportsLWTT == true)
-        {
-            supports += "LWTT ";
-        }
-        if (bg.SupportsDDJB == true)
-        {
-            supports += "DDJB ";
-        }
-        //Console.WriteLine($"{bg.GateName,-10} {bg.SupportsDDJB,-10} {bg.SupportsCFFT,-10} {bg.SupportsLWTT,-10}");
-        Console.WriteLine(bg);
+        Console.WriteLine(bg + flightnumber);
     }
     Console.WriteLine();
 }
@@ -328,7 +319,8 @@ void DisplayAirLineFlights()
         }
     }
 
-    Console.WriteLine($"=============================================\r\nList of Flights for {airline.Name}\r\n=============================================\r\n");
+    Console.WriteLine($"=============================================\r\nList of Flights for {airline.Name}\r\n=============================================\r");
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
     foreach (Flight flight in airline.Flights.Values)
     {
         Console.WriteLine(flight);
@@ -453,7 +445,7 @@ void FlightsInOrder()
             gate = "Unassigned";
         }
 
-        Console.WriteLine($"{flight}     {gate}");
+        Console.WriteLine($"{flight.ToString2()}     {gate}");
     }
     Console.WriteLine();
 }
