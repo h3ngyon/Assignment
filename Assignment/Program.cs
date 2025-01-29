@@ -471,7 +471,7 @@ void FlightsInOrder()
 
 void DisplayFlightHeaders()
 {
-    Console.WriteLine($"{"FlightNo",-9} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Code      Boarding Gate");
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-7}         Code      Boarding Gate");
 }
 
 
