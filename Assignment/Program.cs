@@ -92,10 +92,10 @@ using (StreamReader sr = new StreamReader("flights.csv"))
         }
         flight_dict.Add(flight.FlightNumber, flight);
 
-        string airlineCode = flight.FlightNumber.Substring(0, 2);
+        string airlineCode = flight.FlightNumber.Split(" ")[0];
         if (airline_dict.ContainsKey(airlineCode))
         {
-
+            flight.Airline = airline_dict[airlineCode].Name;
             airline_dict[airlineCode].AddFlight(flight);
         }
 
