@@ -150,7 +150,7 @@ void ListAllBoardingGates()
         Console.WriteLine(bg + flightnumber);
     }
     Console.WriteLine();
-}
+
         if (bg.SupportsLWTT == true)
         {
             supports += "LWTT ";
