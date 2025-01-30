@@ -123,7 +123,7 @@ namespace Assignment
 
         public override string ToString()
         {
-            return base.ToString();
+            return base.ToString() + "       ";
         }
         public override string ToString2()
         {
@@ -288,7 +288,7 @@ namespace Assignment
     class BoardingGate // Havent added Calculate Fees and ToString
     {
         public string GateName {  get; set; }
-        public bool SupportsCFFT {  get; set; }
+        public bool SupportsCFFT {  get; set; } 
         public bool SupportsDDJB { get; set; }
         public bool SupportsLWTT { get; set; }
         public Flight Flight { get; set; }
