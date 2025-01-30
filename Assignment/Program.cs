@@ -305,7 +305,7 @@ bool NewFlight()
         {
             Console.WriteLine("Please try again.");
             continue;
-        }    
+        }    //
     }
 }
 
