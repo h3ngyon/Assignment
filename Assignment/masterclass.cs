@@ -15,13 +15,15 @@ using System.Threading.Tasks;
 
 namespace Assignment
 {
-    abstract class Flight : IComparable<Flight>
+    abstract class Flight : IComparable<Flight> 
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public DateTime ExpectedTime { get; set; }
         public string Status { get; set; }
+        public string Airline { get; set; }
+       
         public Flight(string flightNumber, string origin, string destination, DateTime expectedTime)
         {
             FlightNumber = flightNumber;
@@ -42,7 +44,11 @@ namespace Assignment
         }
         public override string ToString()
         {
-            return $"{FlightNumber,-8}  {Origin,-18}  {Destination,-18}  {ExpectedTime,-7} ";
+            return $"{FlightNumber,-10} {Airline,-20} {Origin,-18}  {Destination,-18}  {ExpectedTime,-7} ";
+        }
+        public virtual string ToString2()
+        {
+            return base.ToString() + "       ";
         }
 
         public int CompareTo(Flight other)
@@ -72,6 +78,10 @@ namespace Assignment
         {
             return $"{base.ToString()}  CFFT ";
         }
+        public override string ToString2()
+        {
+            return $"{base.ToString()}  CFFT ";
+        }
     }
     class DDJBFlight : Flight
     {
@@ -94,6 +104,10 @@ namespace Assignment
         }
         public override string ToString()
         {
+            return $"{base.ToString()}";
+        }
+        public override string ToString2()
+        {
             return $"{base.ToString()}  DDJB ";
         }
     }
@@ -108,6 +122,10 @@ namespace Assignment
         }
 
         public override string ToString()
+        {
+            return base.ToString() + "       ";
+        }
+        public override string ToString2()
         {
             return base.ToString() + "       ";
         }
@@ -135,6 +153,10 @@ namespace Assignment
         }
 
         public override string ToString()
+        {
+            return $"{base.ToString()}";
+        }
+        public override string ToString2()
         {
             return $"{base.ToString()}  LWTT ";
         }
