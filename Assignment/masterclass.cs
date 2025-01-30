@@ -29,10 +29,20 @@ namespace Assignment
             Destination = destination;
             ExpectedTime = expectedTime;
         }
-        public abstract double CalculateFees();
+        public virtual double CalculateFees()
+        {
+            double baseFee = 300;
+            if (Destination == "Singapore (SIN)") // Arriving flights
+            {
+                return 500 + baseFee;
+            }
+            else if (Origin == "Singapore (SIN)") // Departing Flights
+            { return 800 + baseFee; }
+            else { return baseFee; }
+        }
         public override string ToString()
         {
-            return $"Fight No: {FlightNumber,-8} Origin: {Origin,-20} Destination: {Destination,-20} Expected Time: {ExpectedTime,-10}";
+            return $"{FlightNumber,-8}  {Origin,-18}  {Destination,-18}  {ExpectedTime,-7} ";
         }
 
         public int CompareTo(Flight other)
@@ -60,8 +70,7 @@ namespace Assignment
         }
         public override string ToString()
         {
-            string reqfee = $"Request Fee: ${RequestFee}";
-            return $"{base.ToString()}    {reqfee,-10}";
+            return $"{base.ToString()}  CFFT ";
         }
     }
     class DDJBFlight : Flight
@@ -85,8 +94,7 @@ namespace Assignment
         }
         public override string ToString()
         {
-            string reqfee = $"Request Fee: ${RequestFee}";
-            return $"{base.ToString()}    {reqfee,-10}";
+            return $"{base.ToString()}  DDJB ";
         }
     }
 
@@ -96,19 +104,12 @@ namespace Assignment
 
         public override double CalculateFees()
         {
-            double baseFee = 300;
-            if (Destination == "Singapore (SIN)") // Arriving flights
-            {
-                return 500 + baseFee;
-            }
-            else if (Origin == "Singapore (SIN)") // Departing Flights
-            { return 800 + baseFee; }
-            else { return baseFee; }
+            return base.CalculateFees();
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return base.ToString() + "       ";
         }
     }
 
@@ -135,8 +136,7 @@ namespace Assignment
 
         public override string ToString()
         {
-            string reqfee = $"Request Fee: ${RequestFee}";
-            return $"{base.ToString()}    {reqfee,-10}";
+            return $"{base.ToString()}  LWTT ";
         }
     }
 
@@ -203,6 +203,50 @@ namespace Assignment
             else { return TotalFee; }
         }
 
+        public double CalculateDiscount()
+        {
+            double subTotalFee = 0;
+            double discount = 0;
+            // Find Fee for all flights in Flights (dict)
+            foreach (KeyValuePair<string, Flight> kvp in Flights)
+            {
+                subTotalFee += (kvp.Value).CalculateFees();
+                Flight x = kvp.Value;
+                // Discounts for Flights from Dubai, Bangkok, Tokyo
+                string[] cities = ["Dubai (DXB", "Bangkok (BKK)", "Tokyo (NRT)"];
+                if (cities.Contains(x.Origin))
+                {
+                    discount += 25;
+                }
+
+                // Discount for Flights before 11am and after 9pm
+                TimeSpan ninepm = new TimeSpan(21, 0, 0);
+                TimeSpan elevenam = new TimeSpan(11, 0, 0);
+                if (x.ExpectedTime.TimeOfDay < elevenam || x.ExpectedTime.TimeOfDay > ninepm)
+                {
+                    discount += 110;
+                }
+
+                // Check if Flights have special code requests
+                if (x is not NORMFlight)
+                {
+                    discount += 50;
+                }
+            }
+
+            // Calculate Discount based on flights in Flights(dict)
+            // For every 3 flights arriving/departing, airlines will receive a discount
+            if (Flights.Count() / 3 > 1)
+            {
+                discount += (Convert.ToInt32(Flights.Count() / 3) * 350);
+            }
+
+            // For For more than 5 flights arriving/departing, airlines receive an additional discount
+            else if (Flights.Count() > 5)
+            { discount += subTotalFee * 0.03; }
+
+            return discount;
+        }
         public bool RemoveFlight(Flight x)
         {
             if (Flights.ContainsKey(x.FlightNumber))
@@ -222,14 +266,23 @@ namespace Assignment
     class BoardingGate // Havent added Calculate Fees and ToString
     {
         public string GateName {  get; set; }
-        public bool SupportsCFFT {  get; set; }
+        public bool SupportsCFFT {  get; set; } 
         public bool SupportsDDJB { get; set; }
         public bool SupportsLWTT { get; set; }
         public Flight Flight { get; set; }
 
+        public double CalculateFees()
+        {
+            return Flight.CalculateFees();
+        }
         public BoardingGate(string gatename)
         {
             GateName = gatename;
+        }
+
+        public override string ToString()
+        {
+            return $"{GateName,-10} {SupportsDDJB,-10} {SupportsCFFT,-10} {SupportsLWTT,-10}";
         }
     }
 
