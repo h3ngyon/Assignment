@@ -521,9 +521,41 @@ void ModifyFlights()
         }
         else if (choice == "4")
         {
-            while(true)
+            BoardingGate bg;
+            while (true)
             {
-                
+                Console.Write("Enter new Boarding Gate to assign to flight: ");
+                string gatenm = Console.ReadLine();
+                foreach (KeyValuePair<string, BoardingGate> kvp in gatesdict)
+                {
+                    if (kvp.Key == gatenm)
+                    {
+                        bg = kvp.Value;
+                        if (bg.SupportsDDJB == true && gatefound.SupportsDDJB == true)
+                        {
+                            bg.Flight = gatefound.Flight;
+                            break;
+                        }
+                        else if (bg.SupportsCFFT == true && gatefound.SupportsCFFT == true)
+                        {
+                            bg.Flight = gatefound.Flight;
+                            break;
+                        }
+                        else if (bg.SupportsLWTT == true && gatefound.SupportsLWTT == true)
+                        {
+                            bg.Flight = gatefound.Flight;
+                            break;
+
+                        }
+                        else
+                        {
+                            bg.Flight = gatefound.Flight;
+                            break;
+                        }
+
+                    }
+                    Console.WriteLine("Gate not found");
+                }
             }
         }
     }
@@ -558,69 +590,66 @@ void FlightsInOrder()
             }
             gate = "Unassigned";
         }
-
-        Console.WriteLine($"{flight.ToString2()}     {gate}");
+        Console.WriteLine();
     }
-    Console.WriteLine();
-}
 
-void DisplayFlightHeaders()
-{
-    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
-}
-
-
-// WRITING MENU
-
-while (true)
-{
-    try
+    void DisplayFlightHeaders()
     {
-        Console.WriteLine("=============================================\r\nWelcome to Changi Airport Terminal 5\r\n=============================================\r\n1. List All Flights\r\n2. List Boarding Gates\r\n3. Assign a Boarding Gate to a Flight\r\n4. Create Flight\r\n5. Display Airline Flights\r\n6. Modify Flight Details\r\n7. Display Flight Schedule\r\n0. Exit\r\n\r\n");
-        Console.WriteLine("Please select your option: ");
-
-        string option = Console.ReadLine();
-
-        if (option == "1")
-        {
-            ListFlightsBasicInfo();
-        }
-        else if (option == "2")
-        {
-            ListAllBoardingGates();
-        }
-        else if (option == "3")
-        {
-            AssignBoardingGate();
-        }
-        else if (option == "4")
-        {
-            NewFlight();
-        }
-        else if (option == "5")
-        {
-            DisplayAirLineFlights();
-        }
-        else if (option == "6")
-        {
-            ModifyFlights();
-        }
-        else if (option == "7")
-        {
-            FlightsInOrder();
-        }
-        else if (option == "0")
-        {
-            Console.WriteLine("BYE BYE!!!");
-            break;
-        }
-
-    }
-
-
-    catch (FormatException)
-    {
-        Console.WriteLine("Please input an appropriate option.");
-        continue;
+        Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
     }
 }
+
+    // WRITING MENU
+
+    while (true)
+    {
+        try
+        {
+            Console.WriteLine("=============================================\r\nWelcome to Changi Airport Terminal 5\r\n=============================================\r\n1. List All Flights\r\n2. List Boarding Gates\r\n3. Assign a Boarding Gate to a Flight\r\n4. Create Flight\r\n5. Display Airline Flights\r\n6. Modify Flight Details\r\n7. Display Flight Schedule\r\n0. Exit\r\n\r\n");
+            Console.WriteLine("Please select your option: ");
+
+            string option = Console.ReadLine();
+
+            if (option == "1")
+            {
+                ListFlightsBasicInfo();
+            }
+            else if (option == "2")
+            {
+                ListAllBoardingGates();
+            }
+            else if (option == "3")
+            {
+                AssignBoardingGate();
+            }
+            else if (option == "4")
+            {
+                NewFlight();
+            }
+            else if (option == "5")
+            {
+                DisplayAirLineFlights();
+            }
+            else if (option == "6")
+            {
+                ModifyFlights();
+            }
+            else if (option == "7")
+            {
+                FlightsInOrder();
+            }
+            else if (option == "0")
+            {
+                Console.WriteLine("BYE BYE!!!");
+                break;
+            }
+
+        }
+
+
+        catch (FormatException)
+        {
+            Console.WriteLine("Please input an appropriate option.");
+            continue;
+        }
+    }
