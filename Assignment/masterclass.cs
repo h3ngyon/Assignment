@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Assignment
 {  
-        abstract class Flight
+        abstract class Flight : IComparable<Flight>
     {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
@@ -76,7 +76,7 @@ namespace Assignment
         }
         public override string ToString()
         {
-            return $"{base.ToString()}  CFFT ";
+            return $"{base.ToString()}";
         }
         public override string ToString2()
         {
