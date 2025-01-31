@@ -650,6 +650,10 @@ while (true)
         {
             FlightsInOrder();
         }
+        else if (option == "9")
+        {
+            AirlineFees();
+        }
         else if (option == "0")
         {
             Console.WriteLine("BYE BYE!!!");
