@@ -364,24 +364,24 @@ void DisplayAirLineFlights()
 //Basic Feature 8
 //modify flight details
 // list all airlines available
-BoardingGate FindBoardingGate(Flight modify)
+BoardingGate FindBoardingGate(Flight modify)                                    //  method for finding boarding gate 
 {
     BoardingGate found;
-    foreach (KeyValuePair<string, BoardingGate> kvp in gatesdict)
+    foreach (KeyValuePair<string, BoardingGate> kvp in gatesdict)               // run through the gates dictionary to identify gate 
     {
-        if (kvp.Value.Flight == modify)
+        if (kvp.Value.Flight == modify)                                         // if flight entered matches value in boarding gate, return that gate
         {
             found = kvp.Value;
             return found;
         }
     }
-    return null;
+    return null;                                
 }
 
-Flight FindFlight(string modified,string code)
+Flight FindFlight(string modified,string code)                                  // method for finding flight 
 {
     Flight modify;
-    foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)
+    foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)    // run through each value in the flight dictionary from the selected airline
     {
         if (modified == kvp.Value.FlightNumber)
         {
