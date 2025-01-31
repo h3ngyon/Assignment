@@ -39,7 +39,7 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
     string? s = sr.ReadLine();
 
     while ((s = sr.ReadLine()) != null)
-    {
+    { 
         string[] gates = s.Split(",");
         BoardingGate boardinggate = new BoardingGate(gates[0]);
         if (gates[1] == "True")
@@ -93,13 +93,8 @@ using (StreamReader sr = new StreamReader("flights.csv"))
         }
         flight_dict.Add(flight.FlightNumber, flight);
 
-        string airlineCode = flight.FlightNumber.Split(" ")[0];
-        if (airline_dict.ContainsKey(airlineCode))
-        {
-            flight.Airline = airline_dict[airlineCode].Name;
-            airline_dict[airlineCode].AddFlight(flight);
-        }
-
+        
+        
     }
 }
 
@@ -115,6 +110,7 @@ void ListFlightsBasicInfo()
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
     foreach (Flight flight in flight_dict.Values)
     {
+        flight.Airline = T5.GetAirlineFromFlight(flight).Name;
         Console.WriteLine($"{flight}");
     }
     Console.WriteLine();
@@ -544,7 +540,8 @@ void FlightsInOrder()
     {
         flights.Add(flight);
     }
-    flights.Sort();
+    
+    flights.Sort(); 
     DisplayFlightHeaders();
     foreach (Flight flight in flights)
     {
