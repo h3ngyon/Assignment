@@ -383,7 +383,7 @@ Flight FindFlight(string modified,string code)
     Flight modify;
     foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)
     {
-        if (modified == kvp.Key)
+        if (modified == kvp.Value.FlightNumber)
         {
             modify = kvp.Value;
             return modify;
@@ -421,7 +421,7 @@ void ModifyFlights()
         if (airline_dict.ContainsKey(code))
         {
             airline = airline_dict[code];
-            Console.WriteLine($"{"Flight Number",-20} {"Airline Name",-20} {"Origin",-20} {"Destination",-20} {"Expected Departure/Arrival Time",-20}");
+            Console.WriteLine($"{"Flight Number",-20} {"Airline Name",-19} {"Origin",-19} {"Destination",-19} {"Expected Departure/Arrival Time",-19}");
             foreach (Flight flight in airline.Flights.Values)
             {
                 Console.WriteLine($"{flight.FlightNumber,-20} {airline.Name,-20}{flight.Origin,-20}{flight.Destination,-20}{flight.ExpectedTime,-20}");
@@ -563,8 +563,17 @@ void ModifyFlights()
     }
     else if (option == "2")
     {
-        airline_dict[code].Flights.Remove(modified);
-        Console.WriteLine("Flight Removed Successfully");
+        Console.Write($"Are you sure you want to delete flight {modify.FlightNumber}? [Y/N] ");
+        string confirm = Console.ReadLine();
+        if (confirm == "Y")
+        {
+            airline_dict[code].Flights.Remove(modified);
+            Console.WriteLine("Flight Removed Successfully");
+        }
+        else if (confirm == "N")
+        {
+            Console.WriteLine("Flight deletion cancelled.");
+        }
     }
 }
 
@@ -607,7 +616,7 @@ void FlightsInOrder()
 bool AirlineFees()
 {
     // Check all flights assigned boarding Gates
-    foreach (BoardingGate bg in boarding_gate_dict.Values)
+    foreach (BoardingGate bg in gatesdict.Values)
     {
         if (bg.Flight == null)
         {
@@ -667,6 +676,18 @@ bool AirlineFees()
         else if (option == "4")
         {
             NewFlight();
+            Console.Write("Would you like to add another flight? [Y/N]: ");
+            string yn = Console.ReadLine();
+            if (yn == "Y")
+            {
+                NewFlight();
+            }
+            else if (yn == "N")
+            { break; }
+            else
+            {
+                Console.WriteLine("Invalid option.");
+            }
         }
         else if (option == "5")
         {
