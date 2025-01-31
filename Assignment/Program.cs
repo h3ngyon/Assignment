@@ -93,7 +93,11 @@ using (StreamReader sr = new StreamReader("flights.csv"))
         }
         flight_dict.Add(flight.FlightNumber, flight);
 
-        
+        string airline_code = flight.FlightNumber.Split(" ")[0];
+        if (airline_dict.ContainsKey(airline_code))
+        {
+            airline_dict[airline_code].AddFlight(flight);
+        }
         
     }
 }
@@ -110,8 +114,8 @@ void ListFlightsBasicInfo()
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
     foreach (Flight flight in flight_dict.Values)
     {
-        flight.Airline = T5.GetAirlineFromFlight(flight).Name;
-        Console.WriteLine($"{flight}");
+        string airline = T5.GetAirlineFromFlight(flight).Name;
+        Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
     }
     Console.WriteLine();
 }
@@ -328,6 +332,7 @@ void DisplayAirLineFlights()
             string airlineCode = Console.ReadLine().ToUpper();
             if (airline_dict.ContainsKey(airlineCode) == false)
             {
+                Console.WriteLine("Airline code not found.");
                 throw new KeyNotFoundException();
             }
             airline = airline_dict[airlineCode];
@@ -349,7 +354,8 @@ void DisplayAirLineFlights()
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
     foreach (Flight flight in airline.Flights.Values)
     {
-        Console.WriteLine(flight);
+        string airlineName = T5.GetAirlineFromFlight(flight).Name;
+        Console.WriteLine($"{flight.FlightNumber,-10} {airlineName,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
     }
     Console.WriteLine();
 
@@ -564,6 +570,44 @@ void FlightsInOrder()
 void DisplayFlightHeaders()
 {
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
+}
+
+
+// Advanced Feature B
+bool AirlineFees()
+{
+    // Check all flights assigned boarding Gates
+    foreach (BoardingGate bg in boarding_gate_dict.Values)
+    {
+        if (bg.Flight == null)
+        {
+            Console.WriteLine("Ensure that all flights are assigned a boarding gate.");
+            return false;
+        }
+        T5.GateFees.Add(bg.GateName, bg.CalculateFees());
+    }
+
+    // Go through airlines
+    double total = 0;
+    double totalDiscount = 0;
+    Console.WriteLine($"{"Airline",-25} {"SubTotal",-15} {"Discount",-15} {"FinalTotal",-15} Discount Percentage of Total");
+    foreach (Airline airline in airline_dict.Values)
+    {
+        double subtotalFee = airline.CalculateFees();
+        double discount = airline.CalculateDiscount();
+
+        double airlineTotal = subtotalFee - discount;
+        total += airlineTotal;
+        totalDiscount += discount;
+
+        double percentageOfDiscount = discount / airlineTotal * 100;
+
+        Console.WriteLine($"{airline.Name,-25} ${subtotalFee,-14:0.00} ${discount,-14:0.00} ${airlineTotal,-14:0.00} {percentageOfDiscount:0.00}%");
+
+    }
+    Console.WriteLine($"\n{"Terminal 5",-15} Total Fee: ${total,-10:0.00} Discount: ${totalDiscount,-10:0.00} Final Total: ${total - totalDiscount,-10:0.00} Discount Percentage of Total: {totalDiscount / total * 100:0.00}%");
+    return true;
+
 }
 
 
