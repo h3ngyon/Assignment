@@ -97,6 +97,7 @@ using (StreamReader sr = new StreamReader("flights.csv"))
             flight = new NORMFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
         }
         flight_dict.Add(flight.FlightNumber, flight);
+        flight.Status = "Scheduled";
 
         string airline_code = flight.FlightNumber.Split(" ")[0];
         if (airline_dict.ContainsKey(airline_code))
@@ -597,7 +598,7 @@ void FlightsInOrder()
     }
     
     flights.Sort();
-    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Status",-10} {"Boarding Gate"}");
     foreach (Flight flight in flights)
     {
         string gate = "";
@@ -611,7 +612,7 @@ void FlightsInOrder()
             gate = "Unassigned";
         }
         flight.Airline = T5.GetAirlineFromFlight(flight).Name;
-        Console.WriteLine($"{flight.ToString2()}     {gate}");
+        Console.WriteLine($"{flight.ToString2(),-100}   {flight.Status,-10} {gate}");
     }
 
     
