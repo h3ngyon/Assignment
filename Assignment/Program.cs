@@ -144,7 +144,7 @@ void ListFlightsBasicInfo()
     {
         try
         {
-            string airline = T5.GetAirlineFromFlight(flight).Name;
+              string airline = T5.GetAirlineFromFlight(flight).Name;
 
             flight.Airline = airline;
             Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
@@ -234,21 +234,34 @@ void AssignBoardingGate()
             if (option == "y")
             {
                 Console.WriteLine("1. Delayed\n2. Boarding\n3. On Time");
-                Console.WriteLine("Please select the new status of the flight: ");
-                string status = Console.ReadLine();
-                if (status == "1")
+                while (true)
                 {
-                    flight.Status = "Delayed";
+                    Console.WriteLine("Please select the new status of the flight: ");
+                    string status = Console.ReadLine();
+                    if (status == "1")
+                    {
+                        flight.Status = "Delayed";
+                        Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
+                        break;
+                    }
+                    else if (status == "2")
+                    {
+                        flight.Status = "Boarding";
+                        Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
+                        break;
+                    }
+                    else if (status == "3")
+                    {
+                        flight.Status = "On Time";
+                        Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input");
+                    }
+                    
                 }
-                else if (status == "2")
-                {
-                    flight.Status = "Boarding";
-                }
-                else if (status == "3")
-                {
-                    flight.Status = "On Time";
-                }
-                Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
                 break;
             }
             else if (option == "n")
@@ -295,8 +308,6 @@ bool NewFlight()
             DateTime time = Convert.ToDateTime(Console.ReadLine());
 
             Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
-
-
             string? code = Console.ReadLine().ToUpper();
 
             Flight newflight;
@@ -305,12 +316,12 @@ bool NewFlight()
                 CFFTFlight flight = new CFFTFlight(flightNo, origin, destination, time);
                 newflight = flight;
             }
-            if (code == "DDJB")
+            else if (code == "DDJB")
             {
                 DDJBFlight flight = new DDJBFlight(flightNo, origin, destination, time);
                 newflight = flight;
             }
-            if (code == "LWTT")
+            else if (code == "LWTT")
             {
                 LWTTFlight flight = new LWTTFlight(flightNo, origin, destination, time);
                 newflight = flight;
@@ -394,9 +405,9 @@ void DisplayAirLineFlights()
     Airline airline;
     while (true)
     {
-        Console.Write("Enter Airline Code: ");
         try
         {
+            Console.Write("Enter Airline Code: ");
             string airlineCode = Console.ReadLine().ToUpper();
             if (airline_dict.ContainsKey(airlineCode) == false)
             {
@@ -620,7 +631,7 @@ void ModifyFlights()
             string confirm = Console.ReadLine().ToUpper();          // convert to uppercase
             if (confirm == "Y")         // if user confirms to delete
             {
-                airline_dict[code].Flights.Remove(modified);        // remove flight from its respective airline
+                airline_dict[code].Flights.Remove(modify.FlightNumber);        // remove flight from its respective airline
                 Console.WriteLine("Flight Removed Successfully");   //
             }
             else if (confirm == "N")
