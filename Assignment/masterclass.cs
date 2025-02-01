@@ -23,6 +23,8 @@ namespace Assignment
         public DateTime ExpectedTime { get; set; }
         public string Status { get; set; }
         public string Airline { get; set; }
+        public BoardingGate BoardingGate { get; set; }
+        public string Code { get; set; }
        
         public Flight(string flightNumber, string origin, string destination, DateTime expectedTime)
         {
@@ -30,6 +32,7 @@ namespace Assignment
             Origin = origin;
             Destination = destination;
             ExpectedTime = expectedTime;
+            BoardingGate = null;
         }
         public virtual double CalculateFees()
         {
@@ -59,9 +62,12 @@ namespace Assignment
     class CFFTFlight : Flight
     {
         public double RequestFee { get; set; }
+        public string Code { get; set; }
+        
         public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime) : base(flightNumber, origin, destination, expectedTime)
         {
             RequestFee = 150;
+            Code = "CFFT";
         }
         public override double CalculateFees()
         {
@@ -74,6 +80,8 @@ namespace Assignment
             { return 800 + baseFee; }
 
         }
+        
+        
         public override string ToString()
         {
             return $"{base.ToString()}";
@@ -86,9 +94,11 @@ namespace Assignment
     class DDJBFlight : Flight
     {
         public double RequestFee { get; set; }
+        public string Code { get; set; }
         public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime) : base(flightNumber, origin, destination, expectedTime)
         {
             RequestFee = 300;
+            Code = "DDJB";
         }
         public override double CalculateFees()
         {
@@ -114,7 +124,11 @@ namespace Assignment
 
     class NORMFlight : Flight
     {
-        public NORMFlight(string fn, string origin, string destination, DateTime et) : base(fn, origin, destination, et) { }
+        public string Code { get; set; }
+        public NORMFlight(string fn, string origin, string destination, DateTime et) : base(fn, origin, destination, et)
+        {
+            Code = "";
+        }
 
         public override double CalculateFees()
         {
@@ -123,7 +137,7 @@ namespace Assignment
 
         public override string ToString()
         {
-            return base.ToString() + "       ";
+            return base.ToString() ;
         }
         public override string ToString2()
         {
@@ -134,9 +148,11 @@ namespace Assignment
     class LWTTFlight : Flight
     {
         public double RequestFee { get; set; }
+        public string Code { get; set; }
         public LWTTFlight(string fn, string origin, string destination, DateTime et) : base(fn, origin, destination, et)
         {
             RequestFee = 500;
+            Code = "LWTT";
         }
 
         public override double CalculateFees()
@@ -300,6 +316,7 @@ namespace Assignment
         public BoardingGate(string gatename)
         {
             GateName = gatename;
+            Flight = null;
         }
 
         public override string ToString()

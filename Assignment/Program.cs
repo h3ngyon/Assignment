@@ -1,7 +1,4 @@
 ﻿using Assignment;
-using System.ComponentModel.Design;
-using System.Diagnostics.Tracing;
-using System.Reflection.Metadata.Ecma335;
 
 //==========================================================
 // Student Number	: S10268172
@@ -19,7 +16,7 @@ Dictionary<string, BoardingGate> gatesdict = new Dictionary<string, BoardingGate
 // Basic Feature 1.
 
 // Key for airline_dict will use airline code "SQ"/"MH"
-    using (StreamReader sr = new StreamReader("airlines.csv"))
+using (StreamReader sr = new StreamReader("airlines.csv"))
 {
     string? s = sr.ReadLine();
     if (s != null)
@@ -44,7 +41,7 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
     string? s = sr.ReadLine();
 
     while ((s = sr.ReadLine()) != null)
-    { 
+    {
         string[] gates = s.Split(",");
         BoardingGate boardinggate = new BoardingGate(gates[0]);
         if (gates[1] == "True")
@@ -67,47 +64,49 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
 // Basic Feature 2
 // Load Flights from flights.csv
 
-    Dictionary<string, Flight> flight_dict = new Dictionary<string, Flight>();
-    using (StreamReader sr = new StreamReader("flights.csv"))
+Dictionary<string, Flight> flight_dict = new Dictionary<string, Flight>();
+using (StreamReader sr = new StreamReader("flights.csv"))
+{
+    // Read Header
+    sr.ReadLine();
+    string line;
+
+    // Read other lines
+    while ((line = sr.ReadLine()) != null)
     {
-        // Read Header
-        sr.ReadLine();
-        string line;
+        Flight flight;
+        string[] data = line.Split(",");
 
-        // Read other lines
-        while ((line = sr.ReadLine()) != null)
+        // Check Special request code
+        if (data[4] == "CFFT")
         {
-            Flight flight;
-            string[] data = line.Split(",");
-
-            // Check Special request code
-            if (data[4] == "CFFT")
-            {
-                flight = new CFFTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-            }
-            else if (data[4] == "LWTT")
-            {
-                flight = new LWTTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-            }
-            else if (data[4] == "DDJB")
-            {
-                flight = new DDJBFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-            }
-            else
-            {
-                flight = new NORMFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-            }
-            flight_dict.Add(flight.FlightNumber, flight);
-            flight.Status = "Scheduled";
-
-            string airline_code = flight.FlightNumber.Split(" ")[0];
-            if (airline_dict.ContainsKey(airline_code))
-            {
-                airline_dict[airline_code].AddFlight(flight);
-            }
-
+            flight = new CFFTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
         }
+        else if (data[4] == "LWTT")
+        {
+            flight = new LWTTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+        }
+        else if (data[4] == "DDJB")
+        {
+            flight = new DDJBFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+        }
+        else
+        {
+            flight = new NORMFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+        }
+        flight_dict.Add(flight.FlightNumber, flight);
+        if (flight is NORMFlight) { flight.Code = ""; }
+        else { flight.Code = data[4]; }
+        flight.Status = "Scheduled";
+
+        string airline_code = flight.FlightNumber.Split(" ")[0];
+        if (airline_dict.ContainsKey(airline_code))
+        {
+            airline_dict[airline_code].AddFlight(flight);
+        }
+
     }
+}
 
 
 
@@ -124,6 +123,7 @@ void ListFlightsBasicInfo()
     foreach (Flight flight in flight_dict.Values)
     {
         string airline = T5.GetAirlineFromFlight(flight).Name;
+        flight.Airline = airline;
         Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
     }
     Console.WriteLine();
@@ -234,6 +234,8 @@ void AssignBoardingGate()
     }
     // Assign Flight to Boarding Gate
     bg.Flight = flight;
+    flight_dict[flight.FlightNumber].BoardingGate = bg; ;
+    Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
 }
 
 
@@ -306,13 +308,13 @@ bool NewFlight()
             // Display success message(s)
             foreach (Flight flight in flights)
             {
-                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!"); 
+                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!");
             }
             return true;
         }
-        
-        
-        
+
+
+
         catch (OverflowException)
         {
             Console.WriteLine("Please try again.");
@@ -586,7 +588,7 @@ void FlightsInOrder()
     {
         flights.Add(flight);
     }
-    
+
     flights.Sort();
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Status",-10} {"Boarding Gate"}");
     foreach (Flight flight in flights)
@@ -604,6 +606,8 @@ void FlightsInOrder()
         flight.Airline = T5.GetAirlineFromFlight(flight).Name;
         Console.WriteLine($"{flight.ToString2(),-100}   {flight.Status,-10} {gate}");
     }
+
+    
 }
 
 
@@ -647,16 +651,16 @@ bool AirlineFees()
 
 // WRITING MENU
 
-    while (true)
+while (true)
+{
+    try
     {
-        try
-        {
         Console.WriteLine("=============================================\r\nWelcome to Changi Airport Terminal 5\r\n=============================================\r\n1. List All Flights\r\n2. List Boarding Gates\r\n3. Assign a Boarding Gate to a Flight\r\n4. Create Flight\r\n5. Display Airline Flights\r\n6. Modify Flight Details\r\n7. Display Flight Schedule\r");
         Console.WriteLine("8. Advanced Feature 1\r\n9. Advanced Feature 2\r");
         Console.WriteLine("0. Exit\r\n\r\n");
-            Console.WriteLine("Please select your option: ");
+        Console.WriteLine("Please select your option: ");
 
-            string option = Console.ReadLine();
+        string option = Console.ReadLine();
 
         if (option == "1")
         {
@@ -672,8 +676,8 @@ bool AirlineFees()
         }
         else if (option == "4")
         {
-            NewFlight();   
-            
+            NewFlight();
+
         }
         else if (option == "5")
         {
@@ -687,6 +691,7 @@ bool AirlineFees()
         {
             FlightsInOrder();
         }
+        
         else if (option == "9")
         {
             AirlineFees();
@@ -697,12 +702,12 @@ bool AirlineFees()
             break;
         }
 
-        }
-
-
-        catch (FormatException)
-        {
-            Console.WriteLine("Please input an appropriate option.");
-            continue;
-        }
     }
+
+
+    catch (FormatException)
+    {
+        Console.WriteLine("Please input an appropriate option.");
+        continue;
+    }
+}
