@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace Assignment
 {  
         abstract class Flight : IComparable<Flight>
-    {
+       {
         public string FlightNumber { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
