@@ -703,11 +703,7 @@ while (true)
         {
             FlightsInOrder();
         }
-        else if (option == "8")
-        {
-
-            ProcessFlights();
-        }
+        
         else if (option == "9")
         {
             AirlineFees();
