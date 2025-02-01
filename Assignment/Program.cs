@@ -199,32 +199,41 @@ void AssignBoardingGate()
     // Set status
     Console.WriteLine("Would you like to update the flight status? [Y/N]");
     string option = Console.ReadLine().ToLower();
-    if (option == "y")
+    while (true)
     {
-        Console.WriteLine("1. Delayed\n2. Boarding\n3. On Time");
-        Console.WriteLine("Please select the new status of the flight: ");
-        string status = Console.ReadLine();
-        if (status == "1")
+        if (option == "y")
         {
-            flight.Status = "Delayed";
+            Console.WriteLine("1. Delayed\n2. Boarding\n3. On Time");
+            Console.WriteLine("Please select the new status of the flight: ");
+            string status = Console.ReadLine();
+            if (status == "1")
+            {
+                flight.Status = "Delayed";
+            }
+            else if (status == "2")
+            {
+                flight.Status = "Boarding";
+            }
+            else if (status == "3")
+            {
+                flight.Status = "On Time";
+            }
+            Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
         }
-        else if (status == "2")
-        {
-            flight.Status = "Boarding";
-        }
-        else if (status == "3")
+        else if (option == "n")
         {
             flight.Status = "On Time";
+            Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
+            break;
+        }
+        else
+        {
+            Console.WriteLine("Invalid Option");
+            break;
         }
     }
-    else
-    {
-        flight.Status = "On Time";
-    }
-
     // Assign Flight to Boarding Gate
     bg.Flight = flight;
-    Console.WriteLine($"{flight.FlightNumber} has been assigned to Boarding Gate {bg.GateName} successfully.\n");
 }
 
 
@@ -376,7 +385,7 @@ void DisplayAirLineFlights()
 //Basic Feature 8
 //modify flight details
 // list all airlines available
-BoardingGate FindBoardingGate(Flight modify)
+BoardingGate FindBoardingGate(Flight modify)         // Method to find boarding gate that chosen flight belongs to
 {
     foreach (KeyValuePair<string, BoardingGate> kvp in gatesdict)
     {
@@ -389,49 +398,38 @@ BoardingGate FindBoardingGate(Flight modify)
     return null;  // If no match is found, return null
 }
 
-Flight FindFlight(string modified,string code)                                  // method for finding flight 
+Flight FindFlight(string modified,string code)                                  // method for finding flight  from flight number
 {
     foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)    // run through each value in the flight dictionary from the selected airline
     {
-        if (modified == kvp.Value.FlightNumber)
+        if (modified == kvp.Value.FlightNumber)                 // if the code matches a flight number in the flight dictionary within the airline, return the flight
         {
             return kvp.Value;
         }
     }
-    return null;
-}
-string FindSpecial(BoardingGate found)
-{
-    if (found.SupportsDDJB == true)
-    { return "DDJB"; }
-    else if (found.SupportsCFFT == true)
-    { return "CFFT"; }
-    else if (found.SupportsLWTT == true)
-    { return "LWTT"; }
-    else 
-    { return "None"; }
+    return null;                                               // else return null
 }
 void ModifyFlights()
 {
     Console.WriteLine("=============================================");
-    Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
+    Console.WriteLine("List of Airlines for Changi Airport Terminal 5");            // header for modifying flight method
     Console.WriteLine("=============================================");
 
-    Console.WriteLine($"{"Airline Code",-15} {"Airline Name",-20}");
-    foreach (Airline airLine in airline_dict.Values)
+    Console.WriteLine($"{"Airline Code",-15} {"Airline Name",-20}");            // header for airline code and name
+    foreach (Airline airLine in airline_dict.Values)                            // display all available airlines from the airline dictionary
     {
         Console.WriteLine($"{airLine.Code,-15} {airLine.Name,-20}");
     }
-    Console.Write("Enter Airline Code: ");
-    string code = Console.ReadLine().ToUpper();
-    if (string.IsNullOrWhiteSpace(code))
+    Console.Write("Enter Airline Code: ");                  // prompts users to select airline that contains flight to modify
+    string code = Console.ReadLine().ToUpper();             // upper is used in case the user's input is in lowercase, to match airline dictionary key
+    if (string.IsNullOrWhiteSpace(code))                    // if airline code entered is null or blank
     {
-        Console.WriteLine("Airline code cannot be empty.");
+        Console.WriteLine("Airline code cannot be empty."); // prints error message 
         return;
     }
-    Airline airline;
+    Airline airline;                        // define airline as an Airline object  
 
-    if (airline_dict.ContainsKey(code))
+    if (airline_dict.ContainsKey(code))     // if airline dictionary contains the airline code  as key
     {
         airline = airline_dict[code];
         Console.WriteLine($"{"Flight Number",-20} {"Airline Name",-19} {"Origin",-19} {"Destination",-19} {"Expected Departure/Arrival Time",-19}");
@@ -560,7 +558,7 @@ void ModifyFlights()
         else if (option == "2")
         {
             Console.Write($"Are you sure you want to delete flight {modify.FlightNumber}? [Y/N] ");
-            string confirm = Console.ReadLine().ToUpper();
+            string confirm = Console.ReadLine().ToUpper();  
             if (confirm == "Y")
             {
                 airline_dict[code].Flights.Remove(modified);
@@ -606,8 +604,6 @@ void FlightsInOrder()
         flight.Airline = T5.GetAirlineFromFlight(flight).Name;
         Console.WriteLine($"{flight.ToString2(),-100}   {flight.Status,-10} {gate}");
     }
-
-    
 }
 
 
