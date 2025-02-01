@@ -296,7 +296,7 @@ bool NewFlight()
             // Display success message(s)
             foreach (Flight flight in flights)
             {
-                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!");
+                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!"); 
             }
             return true;
         }
