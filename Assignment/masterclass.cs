@@ -44,11 +44,11 @@ namespace Assignment
         }
         public override string ToString()
         {
-            return $"{FlightNumber,-10} {Airline,-20} {Origin,-18}  {Destination,-18}  {ExpectedTime,-7} ";
+            return $"{FlightNumber,-10} {Airline,-20} {Origin,-18}  {Destination,-18}  {ExpectedTime,-19}";
         }
         public virtual string ToString2()
         {
-            return base.ToString() + "       ";
+            return base.ToString() + "        ";
         }
 
         public int CompareTo(Flight other)

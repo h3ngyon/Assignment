@@ -588,8 +588,8 @@ void FlightsInOrder()
         flights.Add(flight);
     }
     
-    flights.Sort(); 
-    DisplayFlightHeaders();
+    flights.Sort();
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
     foreach (Flight flight in flights)
     {
         string gate = "";
@@ -602,13 +602,11 @@ void FlightsInOrder()
             }
             gate = "Unassigned";
         }
-        Console.WriteLine();
+        flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+        Console.WriteLine($"{flight.ToString2()}     {gate}");
     }
 
-    void DisplayFlightHeaders()
-    {
-        Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Boarding Gate"}");
-    }
+    
 }
 
 
