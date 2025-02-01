@@ -283,7 +283,7 @@ bool NewFlight()
             }
 
             // Prompt if user wants to create a new flight
-            Console.WriteLine("Would you like to create another flight? [Y/N}: ");
+            Console.WriteLine("Would you like to create another flight? [Y/N]: ");
             string option = Console.ReadLine().ToLower();
             if (option == "y")
             {
@@ -297,6 +297,9 @@ bool NewFlight()
             }
             return true;
         }
+        
+        
+        
         catch (OverflowException)
         {
             Console.WriteLine("Please try again.");
@@ -681,18 +684,7 @@ bool AirlineFees()
         else if (option == "4")
         {
             NewFlight();
-            Console.Write("Would you like to add another flight? [Y/N]: ");
-            string yn = Console.ReadLine();
-            if (yn == "Y")
-            {
-                NewFlight();
-            }
-            else if (yn == "N")
-            { break; }
-            else
-            {
-                Console.WriteLine("Invalid option.");
-            }
+            
         }
         else if (option == "5")
         {
