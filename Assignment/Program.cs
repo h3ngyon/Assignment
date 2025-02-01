@@ -577,7 +577,7 @@ void DisplayFlightHeaders()
 bool AirlineFees()
 {
     // Check all flights assigned boarding Gates
-    foreach (BoardingGate bg in boarding_gate_dict.Values)
+    foreach (BoardingGate bg in gatesdict.Values)
     {
         if (bg.Flight == null)
         {
