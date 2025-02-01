@@ -122,9 +122,17 @@ void ListFlightsBasicInfo()
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
     foreach (Flight flight in flight_dict.Values)
     {
-        string airline = T5.GetAirlineFromFlight(flight).Name;
-        flight.Airline = airline;
-        Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
+        try
+        {
+            string airline = T5.GetAirlineFromFlight(flight).Name;
+
+            flight.Airline = airline;
+            Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
+        }
+        catch (NullReferenceException)
+        {
+            continue;
+        }
     }
     Console.WriteLine();
 }
@@ -604,7 +612,14 @@ void FlightsInOrder()
             }
             gate = "Unassigned";
         }
-        flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+        try
+        {
+            flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+        }
+        catch (NullReferenceException)
+        {
+            continue;
+        }
         Console.WriteLine($"{flight.ToString2(),-100}   {flight.Status,-10} {gate}");
     }
 
