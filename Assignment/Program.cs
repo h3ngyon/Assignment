@@ -2,9 +2,14 @@
 using System.ComponentModel.Design;
 using System.Diagnostics.Tracing;
 
+//==========================================================
+// Student Number	: S10268172
+// Student Name	: Tan Heng Yong
+// Partner Name	: Isaac Leow Yu Jun
+//==========================================================
+
+
 // Create Dictionaries, Terminal
-
-
 Terminal T5 = new Terminal("Terminal 5", new Dictionary<string, Airline>(), new Dictionary<string, BoardingGate>(), new Dictionary<string, double>());
 Dictionary<string, Airline> airline_dict = new Dictionary<string, Airline>();
 Dictionary<string, BoardingGate> gatesdict = new Dictionary<string, BoardingGate>();
