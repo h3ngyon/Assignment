@@ -139,21 +139,22 @@ T5.Flights = flight_dict;
 // Basic Feature 3: List all Flights with their basic information.
 void ListFlightsBasicInfo()
 {
-    try
+    Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
+    foreach (Flight flight in flight_dict.Values)
     {
-        Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} ");
-        foreach (Flight flight in flight_dict.Values)
+        try
         {
             string airline = T5.GetAirlineFromFlight(flight).Name;
+
             flight.Airline = airline;
             Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
         }
-        Console.WriteLine();
+        catch (NullReferenceException)
+        {
+            continue;
+        }
     }
-    catch(Exception ex)
-    {
-        Console.WriteLine("Error: " + ex.Message);
-    }
+    Console.WriteLine();
 }
 
 // Basic Feature 4: List all Boarding Gates
@@ -659,7 +660,14 @@ void FlightsInOrder()
             }
             gate = "Unassigned";
         }
-        flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+        try
+        {
+            flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+        }
+        catch (NullReferenceException)
+        {
+            continue;
+        }
         Console.WriteLine($"{flight.ToString2(),-100}   {flight.Status,-10} {gate}");
     }
 
