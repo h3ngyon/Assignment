@@ -19,8 +19,7 @@ Dictionary<string, BoardingGate> gatesdict = new Dictionary<string, BoardingGate
 // Basic Feature 1.
 
 // Key for airline_dict will use airline code "SQ"/"MH"
-
-using (StreamReader sr = new StreamReader("airlines.csv"))
+    using (StreamReader sr = new StreamReader("airlines.csv"))
 {
     string? s = sr.ReadLine();
     if (s != null)
@@ -67,48 +66,50 @@ using (StreamReader sr = new StreamReader("boardinggates.csv"))
 
 // Basic Feature 2
 // Load Flights from flights.csv
-Dictionary<string, Flight> flight_dict = new Dictionary<string, Flight>();
-using (StreamReader sr = new StreamReader("flights.csv"))
-{
-    // Read Header
-    sr.ReadLine();
-    string line;
-    
-    // Read other lines
-    while ((line = sr.ReadLine()) != null)
+
+    Dictionary<string, Flight> flight_dict = new Dictionary<string, Flight>();
+    using (StreamReader sr = new StreamReader("flights.csv"))
     {
-        Console.WriteLine("haha");
-        Flight flight;
-        string[] data = line.Split(",");
+        // Read Header
+        sr.ReadLine();
+        string line;
 
-        // Check Special request code
-        if (data[4] == "CFFT")
+        // Read other lines
+        while ((line = sr.ReadLine()) != null)
         {
-            flight = new CFFTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-        }
-        else if (data[4] == "LWTT")
-        {
-            flight = new LWTTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-        }
-        else if (data[4] == "DDJB")
-        {
-            flight = new DDJBFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-        }
-        else
-        {
-            flight = new NORMFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
-        }
-        flight_dict.Add(flight.FlightNumber, flight);
-        flight.Status = "Scheduled";
+            Flight flight;
+            string[] data = line.Split(",");
 
-        string airline_code = flight.FlightNumber.Split(" ")[0];
-        if (airline_dict.ContainsKey(airline_code))
-        {
-            airline_dict[airline_code].AddFlight(flight);
+            // Check Special request code
+            if (data[4] == "CFFT")
+            {
+                flight = new CFFTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+            }
+            else if (data[4] == "LWTT")
+            {
+                flight = new LWTTFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+            }
+            else if (data[4] == "DDJB")
+            {
+                flight = new DDJBFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+            }
+            else
+            {
+                flight = new NORMFlight(data[0], data[1], data[2], Convert.ToDateTime(data[3]));
+            }
+            flight_dict.Add(flight.FlightNumber, flight);
+            flight.Status = "Scheduled";
+
+            string airline_code = flight.FlightNumber.Split(" ")[0];
+            if (airline_dict.ContainsKey(airline_code))
+            {
+                airline_dict[airline_code].AddFlight(flight);
+            }
+
         }
-        
     }
-}
+
+
 
 //Initialize Terminal, T5, properties(dictionaries)
 T5.Airlines = airline_dict;

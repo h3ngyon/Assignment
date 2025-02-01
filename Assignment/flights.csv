@@ -1,4 +1,4 @@
-  Flight Number,Origin,Destination,Expected Departure/Arrival,Special Request Code
+Flight Number,Origin,Destination,Expected Departure/Arrival,Special Request Code
 SQ 115,Tokyo (NRT),Singapore (SIN),11:45 AM,DDJB
 MH 298,Kuala Lumpur (KUL),Singapore (SIN),12:30 PM,CFFT
 JL 401,Tokyo (NRT),Singapore (SIN),1:10 PM,CFFT
