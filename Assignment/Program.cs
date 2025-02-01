@@ -564,7 +564,7 @@ void ModifyFlights()
     else if (option == "2")
     {
         Console.Write($"Are you sure you want to delete flight {modify.FlightNumber}? [Y/N] ");
-        string confirm = Console.ReadLine();
+        string confirm = Console.ReadLine().ToUpper();
         if (confirm == "Y")
         {
             airline_dict[code].Flights.Remove(modified);
@@ -656,7 +656,9 @@ bool AirlineFees()
     {
         try
         {
-            Console.WriteLine("=============================================\r\nWelcome to Changi Airport Terminal 5\r\n=============================================\r\n1. List All Flights\r\n2. List Boarding Gates\r\n3. Assign a Boarding Gate to a Flight\r\n4. Create Flight\r\n5. Display Airline Flights\r\n6. Modify Flight Details\r\n7. Display Flight Schedule\r\n0. Exit\r\n\r\n");
+        Console.WriteLine("=============================================\r\nWelcome to Changi Airport Terminal 5\r\n=============================================\r\n1. List All Flights\r\n2. List Boarding Gates\r\n3. Assign a Boarding Gate to a Flight\r\n4. Create Flight\r\n5. Display Airline Flights\r\n6. Modify Flight Details\r\n7. Display Flight Schedule\r");
+        Console.WriteLine("8. Advanced Feature 1\r\n9. Advanced Feature 2\r");
+        Console.WriteLine("0. Exit\r\n\r\n");
             Console.WriteLine("Please select your option: ");
 
             string option = Console.ReadLine();
@@ -700,6 +702,10 @@ bool AirlineFees()
         else if (option == "7")
         {
             FlightsInOrder();
+        }
+        else if (option == "9")
+        {
+            AirlineFees();
         }
         else if (option == "0")
         {
