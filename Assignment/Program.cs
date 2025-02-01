@@ -278,7 +278,7 @@ bool NewFlight()
 
 
             // Append Flight data to flights.csv
-            using (StreamWriter sw = new StreamWriter("flights.csv"))
+            using (StreamWriter sw = new StreamWriter("flights.csv", true))
             {
                 sw.WriteLine($"{newflight.FlightNumber},{newflight.Origin},{newflight.Destination},{newflight.ExpectedTime},{code}");
             }
@@ -294,7 +294,7 @@ bool NewFlight()
             // Display success message(s)
             foreach (Flight flight in flights)
             {
-                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!");
+                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!"); 
             }
             return true;
         }
