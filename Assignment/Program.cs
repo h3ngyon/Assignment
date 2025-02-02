@@ -339,6 +339,7 @@ bool NewFlight()
                 newflight = flight;
                 code = "";
             }
+            newflight.Code = code;
             flight_dict.Add(newflight.FlightNumber, newflight);         // Add new flight to flight_dict
             flights.Add(newflight);                                     // Add new flight to list to be printed at the end of the method
 
@@ -676,7 +677,14 @@ void FlightsInOrder()
         }
         try
         {
-            flight.Airline = T5.GetAirlineFromFlight(flight).Name;  // Get flight airline name
+            Airline air = T5.GetAirlineFromFlight(flight);// Get flight airline name
+            string airline = "";        // Flight does not belong to an actual airline
+            if (air != null)            // If flight has an airline
+            {
+                airline = air.Name;
+            }
+            flight.Airline = airline;
+
         }
         catch (NullReferenceException)
         {
@@ -703,6 +711,7 @@ void ProcessFlights()
             if (flight.BoardingGate == bg && bg.Flight == flight) { return bg; }
             else if (flight.BoardingGate == null)
             {
+                if (flight.Code == "") { return bg; }
                 List<string> supportCode = new List<string>();
                 //  if yes, search for an unassigned Boarding Gate that matches the Special Request Code
                 if (bg.SupportsDDJB && code == "DDJB") { supportCode.Add("DDJB"); }
@@ -762,7 +771,11 @@ void ProcessFlights()
             {
                 string code = flight.Code;
                 BoardingGate bg = SearchGate(flight);
-                flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+                Airline _ = T5.GetAirlineFromFlight(flight);
+                if (_ != null)
+                {
+                    flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+                }
                 flight.BoardingGate = bg;
                 //o  assign the Boarding Gate to the Flight Number
                 bg.Flight = flight;
