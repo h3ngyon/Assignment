@@ -145,10 +145,15 @@ void ListFlightsBasicInfo()
     {
         try
         {
-              string airline = T5.GetAirlineFromFlight(flight).Name;
-
+            Airline air = T5.GetAirlineFromFlight(flight);
+            string airline = "";        // Flight does not belong to an actual airline
+            if (air != null)            // If flight has an airline
+            {
+                 airline = air.Name;
+            }
             flight.Airline = airline;
-            Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
+             Console.WriteLine($"{flight.FlightNumber,-10} {airline,-20} {flight.Origin,-18}  {flight.Destination,-18}  {flight.ExpectedTime,-7} ");
+            
         }
         catch (NullReferenceException)
         {
