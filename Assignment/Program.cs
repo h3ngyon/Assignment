@@ -347,7 +347,7 @@ bool NewFlight()
             using (StreamWriter sw = new StreamWriter("flights.csv", true))
             {
                 string? s;
-                sw.WriteLine($"\n{newflight.FlightNumber},{newflight.Origin},{newflight.Destination},{newflight.ExpectedTime},{code}");
+                sw.WriteLine($"{newflight.FlightNumber},{newflight.Origin},{newflight.Destination},{newflight.ExpectedTime},{code}");
             }
 
             // Prompt if user wants to create a new flight
