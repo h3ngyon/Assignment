@@ -352,13 +352,15 @@ bool NewFlight()
             }
 
             // Prompt if user wants to create a new flight
+            string option = "" ;
             while (true)
             {
                 Console.WriteLine("Would you like to create another flight? [Y/N]: ");
-                string option = Console.ReadLine().ToLower();
+                option = Console.ReadLine().ToLower();
                 if (option == "y")
                 {
-                    continue;
+                    break;
+
                 }
                 else if (option == "n")
                 {
@@ -369,12 +371,16 @@ bool NewFlight()
                     Console.WriteLine("Invalid option");
                 }
             }
-            // Display success message(s)
-            foreach (Flight flight in flights)      // Display all new flights created
+            if (option == "n")
             {
-                Console.WriteLine($"Flight {newflight.FlightNumber} has been added!");
+                // Display success message(s)
+                foreach (Flight flight in flights)      // Display all new flights created
+                {
+                    Console.WriteLine($"Flight {flight.FlightNumber} has been added!");
+                }
+                return true;
             }
-            return true;
+        
         }
         catch (OverflowException)
         {
