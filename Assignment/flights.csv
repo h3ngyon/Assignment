@@ -8,7 +8,7 @@ TR 123,Bangkok (BKK),Singapore (SIN),10:00 AM,
 EK 870,Dubai (DXB),Singapore (SIN),9:30 PM,DDJB
 BA 450,Singapore (SIN),London (LHR),7:15 PM,LWTT
 SQ 221,Manila (MNL),Singapore (SIN),8:50 AM,DDJB
-MH 652,Singapore (SIN),Jakarta (CGK),12:40 PM,
+MH 652,Singapore (SIN),Jakarta (CGK),12:40 PM, 
 JL 198,Singapore (SIN),Tokyo (NRT),1:30 PM,
 CX 334,Singapore (SIN),Hong Kong (HKD),6:15 PM,CFFT
 QF 821,Singapore (SIN),Melbourne (MEL),9:10 AM,LWTT
@@ -29,3 +29,5 @@ JL 900,Tokyo (NRT),Singapore (SIN),10:20 AM,
 CX 329,Singapore (SIN),Hong Kong (HKD),12:50 PM,DDJB
 QF 897,Singapore (SIN),Sydney (SYD),1:40 PM,
 TR 786,Bangkok (BKK),Singapore (SIN),2:55 PM,
+SQ 111,Singapore (SIN),Dubai (DXB),2/2/2025 13:40:00,
+SQ 555,Singapore (SIN),Tokyo (NRT),2/2/2025 15:44:00,LWTT
