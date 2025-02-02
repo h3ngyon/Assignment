@@ -75,6 +75,7 @@ catch(FileNotFoundException ex)
     Console.WriteLine("File is not found.");
 }
 
+
 // Basic Feature 2
 // Load Flights from flights.csv
 
@@ -290,7 +291,7 @@ void AssignBoardingGate()
 // Basic Feature 6: Create a new Flight
 bool NewFlight()
 {
-    List<Flight> flights = new List<Flight>();
+    List<Flight> flights = new List<Flight>(); // Create list to display new flights created at the end of the method
     while (true)
     {
         try
@@ -310,6 +311,7 @@ bool NewFlight()
             Console.Write("Enter Special Request Code (CFFT/DDJB/LWTT/None): ");
             string? code = Console.ReadLine().ToUpper();
 
+            // Create the flight subclass based on the special request code 
             Flight newflight;
             if (code == "CFFT")
             {
@@ -332,8 +334,8 @@ bool NewFlight()
                 newflight = flight;
                 code = "";
             }
-            flight_dict.Add(newflight.FlightNumber, newflight);
-            flights.Add(newflight);
+            flight_dict.Add(newflight.FlightNumber, newflight);         // Add new flight to flight_dict
+            flights.Add(newflight);                                     // Add new flight to list to be printed at the end of the method
 
 
             // Append Flight data to flights.csv
@@ -356,21 +358,18 @@ bool NewFlight()
                 {
                     break;
                 }
-                else
+                else        // Invalid input handling
                 {
                     Console.WriteLine("Invalid option");
                 }
             }
             // Display success message(s)
-            foreach (Flight flight in flights)
+            foreach (Flight flight in flights)      // Display all new flights created
             {
                 Console.WriteLine($"Flight {newflight.FlightNumber} has been added!");
             }
             return true;
         }
-
-
-
         catch (OverflowException)
         {
             Console.WriteLine("Please try again.");
@@ -650,30 +649,29 @@ void ModifyFlights()
 // Basic Feature 9: Display flights in chronological order , boarding gates assignments where applicable
 void FlightsInOrder()
 {
-    List<Flight> flights = new List<Flight>();
-
-    foreach (Flight flight in flight_dict.Values)
+    List<Flight> flights = new List<Flight>();      // Create list to store all flight objects to be sorted later
+    foreach (Flight flight in flight_dict.Values)   // Add flight objects into the list
     {
         flights.Add(flight);
     }
 
-    flights.Sort();
+    flights.Sort(); // Sort Flights
     Console.WriteLine($"{"FlightNo",-10} {"Airline",-20} {"Origin",-18}  {"Destination",-18}  {"ExpectedTime",-20} {"Code",-9} {"Status",-10} {"Boarding Gate"}");
     foreach (Flight flight in flights)
     {
-        string gate = "";
+        string gate = ""; 
         foreach (BoardingGate bg in gatesdict.Values)
         {
             if (bg.Flight == flight)
             {
-                gate = bg.GateName;
+                gate = bg.GateName; //Get flight gate
                 break;
             }
             gate = "Unassigned";
         }
         try
         {
-            flight.Airline = T5.GetAirlineFromFlight(flight).Name;
+            flight.Airline = T5.GetAirlineFromFlight(flight).Name;  // Get flight airline name
         }
         catch (NullReferenceException)
         {
@@ -802,14 +800,14 @@ void ProcessFlights()
 bool AirlineFees()
 {
     // Check all flights assigned boarding Gates
-    foreach (BoardingGate bg in gatesdict.Values)
+    foreach (Flight flight in flight_dict.Values)
     {
-        if (bg.Flight == null)
+        if (flight.BoardingGate == null)
         {
             Console.WriteLine("Ensure that all flights are assigned a boarding gate.");
             return false;
         }
-        T5.GateFees.Add(bg.GateName, bg.CalculateFees());
+        T5.GateFees.Add(flight.BoardingGate.GateName, flight.BoardingGate.CalculateFees());
     }
 
     // Go through airlines
