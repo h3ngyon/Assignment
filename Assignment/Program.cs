@@ -450,10 +450,7 @@ void DisplayAirLineFlights()
     Console.WriteLine();
 
 }
-
-//Basic Feature 8
-//modify flight details
-// list all airlines available
+//feature 8 : Modifying flights
 BoardingGate FindBoardingGate(Flight modify)         // Method to find boarding gate that chosen flight belongs to
 {
     foreach (KeyValuePair<string, BoardingGate> kvp in gatesdict)
@@ -467,7 +464,7 @@ BoardingGate FindBoardingGate(Flight modify)         // Method to find boarding 
     return null;  // If no match is found, return null
 }
 
-Flight FindFlight(string modified,string code)                                  // method for finding flight  from flight number
+Flight FindFlight(string modified, string code)                                  // method for finding flight  from flight number
 {
     foreach (KeyValuePair<string, Flight> kvp in airline_dict[code].Flights)    // run through each value in the flight dictionary from the selected airline
     {
@@ -514,7 +511,6 @@ void ModifyFlights()
         Console.WriteLine("2. Delete Flight ");
         Console.Write("Choose an option: ");                            // prompts users to pick either 1 or 2
         string option = Console.ReadLine();
-
         //MODIFY
         if (option == "1")                                              // if option is 1 (to modify) 
         {
@@ -580,7 +576,6 @@ void ModifyFlights()
                 modify.Status = statuschange;         // update new status
                 Console.WriteLine("Flight status changed!");
             }
-
             //MODIFY SPECIAL REQUEST CODE
             else if (choice == "3")
             {
@@ -610,7 +605,7 @@ void ModifyFlights()
             }
 
             //MODIFY BOARDING GATE
-            else if (choice == "4")         
+            else if (choice == "4")
             {
                 Console.Write($"Which gate would you like to assign Flight {modify.FlightNumber} to? ");    //prompts user which gate to assign the flight to
                 string chosengate = Console.ReadLine().ToUpper();
@@ -636,7 +631,7 @@ void ModifyFlights()
         }
 
         //DELETE
-        else if (option == "2") 
+        else if (option == "2")
         {
             Console.Write($"Are you sure you want to delete flight {modify.FlightNumber}? [Y/N] ");     // ask user for confirmation to delete flight
             string confirm = Console.ReadLine().ToUpper();          // convert to uppercase
@@ -656,8 +651,6 @@ void ModifyFlights()
         Console.WriteLine("Airline not found.");
     }
 }
-
-
 // Basic Feature 9: Display flights in chronological order , boarding gates assignments where applicable
 void FlightsInOrder()
 {
